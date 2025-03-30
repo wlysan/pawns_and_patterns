@@ -3,26 +3,26 @@
  * Plugin Autoloader
  * Loads the necessary files for the plugin to function
  * 
- * Plugin Name: Admin Dashboard
- * Description: Provides administrative dashboard functionality
+ * Plugin Name: [Plugin Name]
+ * Description: [Plugin Description]
  * Version: 1.0.0
  */
 
+ /*
 // Include plugin routes
 include_once __DIR__ . '/plugin_routes.php';
 
 // Include plugin helpers
 include_once __DIR__ . '/includes/helpers.php';
 
-// Include plugin API functions
-include_once __DIR__ . '/includes/api.php';
-
 // Register plugin hooks
-function register_admin_hooks() {
+function register_[plugin_name]_hooks() {
     // Register hooks for this plugin
-    add_hook('menu_lateral_items', 'admin_menu_items');
-    add_hook('page_assets', 'admin_assets');
+    add_hook('menu_lateral_items', '[plugin_name]_menu_items');
+    add_hook('page_assets', '[plugin_name]_assets');
+    // Add other hooks as needed
 }
 
 // Run hook registration
-register_admin_hooks();
+register_[plugin_name]_hooks();
+*/

@@ -3,14 +3,16 @@
 ob_start();
 
 // Inicia a sessão no começo do arquivo, antes de qualquer saída
+/*
 if (!isset($_SESSION) && !headers_sent()) {
     session_start();
 }
 
 // Verifica permissões de administrador
 if (function_exists('require_admin_privileges')) {
-    require_admin_privileges();
+    //require_admin_privileges();
 }
+    */
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +22,7 @@ if (function_exists('require_admin_privileges')) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paws&Patterns Admin</title>
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Font Awesome (ícones) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -409,10 +411,10 @@ if (function_exists('require_admin_privileges')) {
     </div>
 
     <!-- Bootstrap JS (com Popper.js) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/bootstrap-5.2.3-dist/js/bootstrap.bundle.js"></script>
     
     <!-- Chart.js para dashboards -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/assets/js/chart.js"></script>
     
     <!-- Admin Dashboard JS -->
     <script src="/plugins/admin/js/admin_dashboard.js"></script>

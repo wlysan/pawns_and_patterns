@@ -25,5 +25,10 @@ $plugin_route['admin'] = [
         'view' => 'plugins/admin/views/admin_profile_view.php',
         'controller' => 'plugins/admin/controllers/admin_profile_controller.php',
         'structure' => 'plugins/admin/struct/admin_dashboard_struct.php'
+    ],
+    '/admin_login' => [
+        'view' => 'plugins/admin/views/admin_login_view.php',
+        'controller' => 'plugins/admin/controllers/admin_login_controller.php',
+        'structure' => 'plugins/admin/struct/admin_login_struct.php'
     ]
 ];

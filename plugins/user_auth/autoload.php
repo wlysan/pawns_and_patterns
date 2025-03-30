@@ -1,62 +1,28 @@
 <?php
 /**
- * Arquivo de autoload do plugin de autenticação
- * Carrega as dependências necessárias
+ * Plugin Autoloader
+ * Loads the necessary files for the plugin to function
+ * 
+ * Plugin Name: Product Management
+ * Description: Provides product and category management functionality
+ * Version: 1.0.0
  */
 
-// Inclui o arquivo de rotas do plugin
-include "plugin_routes.php";
-include "api/api.php";
+// Include plugin routes
+include_once __DIR__ . '/plugin_routes.php';
 
-/**
- * Função para verificar se um usuário está autenticado
- * @return bool Retorna true se o usuário estiver autenticado, false caso contrário
- */
-function is_authenticated() {
-    if (!isset($_SESSION)) {
-        session_start();
-    }
-    
-    return isset($_SESSION['user_id']) && !empty($_SESSION['user_id']);
+// Include plugin helpers
+include_once __DIR__ . '/includes/helpers.php';
+
+// Include plugin API functions
+include_once __DIR__ . '/includes/api.php';
+
+// Register plugin hooks
+function register_product_hooks() {
+    // Register hooks for this plugin
+    add_hook('menu_lateral_items', 'product_menu_items');
+    add_hook('page_assets', 'product_assets');
 }
 
-/**
- * Função para obter o ID do usuário autenticado
- * @return int|null Retorna o ID do usuário ou null se não estiver autenticado
- */
-function get_authenticated_user_id() {
-    if (!is_authenticated()) {
-        return null;
-    }
-    
-    return $_SESSION['user_id'];
-}
-
-/**
- * Função para obter os dados do usuário autenticado
- * @return array|null Retorna um array com os dados do usuário ou null se não estiver autenticado
- */
-function get_authenticated_user() {
-    $user_id = get_authenticated_user_id();
-    
-    if (!$user_id) {
-        return null;
-    }
-    
-    // Usa a função read() do api.php para buscar os dados do usuário
-    $where = ['id' => $user_id, 'is_deleted' => false];
-    $users = read('users', $where);
-    
-    return !empty($users) ? $users[0] : null;
-}
-
-/**
- * Função para exigir autenticação
- * Redireciona para a página de login caso o usuário não esteja autenticado
- */
-function require_authentication() {
-    if (!is_authenticated()) {
-        header('Location: /index.php/login');
-        exit;
-    }
-}
+// Run hook registration
+register_product_hooks();

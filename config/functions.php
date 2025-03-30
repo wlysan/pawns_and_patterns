@@ -11,64 +11,45 @@ $plugin_hook = array();
  *
  * @return array An associative array with 'route', 'controller', and 'action', or redirects if 'index.php' is missing.
  */
-function get_route()
-{
+
+/**
+ * Optimized routing function to replace the existing get_route function
+ * 
+ * @return array An associative array with 'route', 'controller', and 'action'
+ */
+function get_route() {
     $url = $_SERVER['REQUEST_URI'];
-
-    $route = '';
-
+    
+    // Default route
+    $retorno = ['route' => '/home', 'controller' => null, 'action' => null];
+    
     // Check if the URL contains /index.php
-    if (str_contains($url, '/index.php')) {
-        // Split the URL into segments after /index.php
-        $path = parse_url($url, PHP_URL_PATH);
-        $segments = explode('/', trim($path, '/'));
-
-        // Find the position of 'index.php' in the segments
-        $indexPosition = array_search('index.php', $segments);
-
-        // Extract the parts after 'index.php' if they exist
-        if ($indexPosition !== false && isset($segments[$indexPosition + 1])) {
-            $route = "/" . $segments[$indexPosition + 1] ?? null;
-            $action = $segments[$indexPosition + 3] ?? null;
-            $controller = $segments[$indexPosition + 2] ?? null;
-
-            // Here you can handle your routes/actions
-
-            if ($route != null) {
-                //carrega view
+    if (strpos($url, '/index.php') !== false) {
+        // Extract the path after /index.php
+        $parts = explode('/index.php', $url, 2);
+        
+        if (isset($parts[1]) && !empty($parts[1])) {
+            $path_parts = explode('/', trim($parts[1], '/'));
+            
+            // The first part after /index.php is the route
+            if (!empty($path_parts[0])) {
+                $retorno['route'] = '/' . $path_parts[0];
+                
+                // The second part is either the controller or the action
+                if (isset($path_parts[1]) && !empty($path_parts[1])) {
+                    if (isset($path_parts[2]) && !empty($path_parts[2])) {
+                        // If there's a third part, then the second is controller and third is action
+                        $retorno['controller'] = $path_parts[1];
+                        $retorno['action'] = $path_parts[2];
+                    } else {
+                        // If there's no third part, the second is the action
+                        $retorno['action'] = $path_parts[1];
+                    }
+                }
             }
-
-            if ($action != null) {
-                //  echo "Action: $action";
-            }
-            if ($controller != null && $action == null) {
-                $action = $controller;
-                $controller = null;
-            }
-            if (count($segments) > 3) {
-                unset($segments[$indexPosition]);
-
-                unset($segments[$indexPosition + 1]);
-
-                //unset($segments[$indexPosition + 2]);
-
-                $action = implode("|", $segments);
-            }
-
-
-            $retorno['route'] = $route;
-            $retorno['controller'] = $controller;
-            $retorno['action'] = $action;
-            return $retorno;
-        } else {
-            if ($route == "") {
-                $route = "/home";
-            }
-
-            $retorno['route'] = $route;
-
-            return $retorno;
         }
+        
+        return $retorno;
     } else {
         // Redirect to /index.php if it's not present in the URL
         header('Location: /index.php');

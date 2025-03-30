@@ -7,9 +7,6 @@
 // Inclui o arquivo de rotas do plugin
 include "plugin_routes.php";
 
-// Inclui o arquivo de utilitários compartilhados
-include "api/utils_api.php";
-
 // Inclui os arquivos de API para categorias e produtos
 include "api/category_api.php";
 include "api/product_api.php";

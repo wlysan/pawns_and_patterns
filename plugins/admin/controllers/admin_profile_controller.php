@@ -11,7 +11,7 @@ if (!isset($_SESSION)) {
 
 // Verifica permissões de administrador
 if (function_exists('require_admin_privileges')) {
-    require_admin_privileges();
+    //require_admin_privileges();
 }
 
 // Inicializa a variável global $view_data para uso na view

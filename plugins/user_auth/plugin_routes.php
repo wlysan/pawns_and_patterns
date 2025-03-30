@@ -1,7 +1,7 @@
 <?php
 /**
- * Rotas do plugin de autenticação de usuários
- * Define as rotas específicas para login, registro e logout
+ * User Authentication Routes
+ * Defines routes for authentication functionality
  */
 
 $plugin_route['user_auth'] = [
@@ -17,7 +17,12 @@ $plugin_route['user_auth'] = [
     ],
     '/profile' => [
         'view' => 'plugins/user_auth/views/profile_view.php',
-        'controller' => '',
+        'controller' => 'plugins/user_auth/controllers/profile_controller.php',
+        'structure' => 'app/struct/blank.php'
+    ],
+    '/logout' => [
+        'view' => 'plugins/user_auth/views/logout_view.php',
+        'controller' => 'plugins/user_auth/controllers/logout_controller.php',
         'structure' => 'app/struct/blank.php'
     ]
 ];
