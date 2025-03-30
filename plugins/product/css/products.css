@@ -1,0 +1,177 @@
+/**
+ * Estilos para as páginas de produtos
+ * Paws&Patterns - Pet Boutique (Irlanda)
+ */
+
+/* Estilos para Cards de Produtos */
+.product-card {
+    position: relative;
+    transition: all 0.3s ease;
+    border: 1px solid #dee2e6;
+    overflow: hidden;
+}
+
+.product-card:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transform: translateY(-3px);
+}
+
+.product-img-container {
+    height: 200px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.product-img {
+    height: 100%;
+    object-fit: contain;
+    transition: all 0.3s ease;
+}
+
+.product-card:hover .product-img {
+    transform: scale(1.05);
+}
+
+.product-price {
+    margin-bottom: 10px;
+}
+
+.product-link {
+    color: #212529;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.product-link:hover {
+    color: #0d6efd;
+}
+
+.product-short-desc {
+    font-size: 0.85rem;
+    color: #6c757d;
+    height: 40px;
+    overflow: hidden;
+    /* Método moderno usando line-clamp (com prefixo de fornecedor) */
+    display: -webkit-box;
+    /*-webkit-line-clamp: 2;*/
+    -webkit-box-orient: vertical;
+    /* Fallback para navegadores sem suporte a line-clamp */
+    display: block;
+    /*display: -webkit-box;*/
+    max-height: 2.5em; /* Baseado no tamanho da fonte e altura da linha */
+    text-overflow: ellipsis;
+}
+
+.featured-badge, .sale-badge {
+    position: absolute;
+    top: 10px;
+    z-index: 2;
+}
+
+.featured-badge {
+    right: 10px;
+}
+
+.sale-badge {
+    left: 10px;
+}
+
+/* Estilos para a Página de Detalhes */
+.product-gallery {
+    margin-bottom: 30px;
+}
+
+.product-details h1 {
+    margin-bottom: 5px;
+}
+
+.product-attributes th {
+    width: 40%;
+}
+
+/* Estilos para Formulário de Produto */
+.label-required::after {
+    content: " *";
+    color: #dc3545;
+}
+
+.form-section-title {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.dynamic-field-row {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f8f9fa;
+}
+
+.dynamic-field-row:hover {
+    background-color: #e9ecef;
+}
+
+.add-dynamic-field {
+    margin-top: 10px;
+}
+
+/* Categorias na visualização de produto */
+.product-category-badge {
+    display: inline-block;
+    padding: 0.35em 0.65em;
+    font-size: 0.75em;
+    font-weight: 600;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.25rem;
+    color: #212529;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.product-category-badge.primary {
+    border-color: #ffc107;
+    background-color: #fff3cd;
+}
+
+/* Paginação personalizada */
+.pagination .page-link {
+    color: #343a40;
+    border-color: #dee2e6;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #343a40;
+    border-color: #343a40;
+}
+
+.pagination .page-link:hover {
+    color: #000;
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+}
+
+/* Responsividade */
+@media (max-width: 767.98px) {
+    .product-img-container {
+        height: 180px;
+    }
+    
+    .product-details {
+        margin-top: 20px;
+    }
+    
+    .product-thumbnails .col-3 {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+}

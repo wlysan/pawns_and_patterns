@@ -1,0 +1,225 @@
+/* styles.css */
+.content {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  margin-top: 80px;
+  margin-right: 250px;
+  margin-left: 250px;
+  padding: 20px;
+}
+
+/* Filtros e Ordenação */
+.filters-container {
+  display: flex;
+  justify-content: left;
+  gap: 30px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+#filterButton,
+#sortButton {
+  background-color: transparent;
+  color: #000;
+  border: 1px solid #000;
+  padding: 10px 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}
+
+#filterButton i,
+#sortButton i {
+  font-size: 16px;
+}
+
+.sort-by {
+  position: relative;
+}
+
+.sort-options {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  z-index: 100;
+  width: 200px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.sort-option {
+  padding: 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.sort-option:hover {
+  background-color: #f8f8f8;
+}
+
+/* Modal de Filtro */
+.modal-filter {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease-in-out, visibility 0.5s;
+  z-index: 1100;
+}
+
+/* Conteúdo do Modal */
+.modal-filter-content {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 300px;
+  height: 100%;
+  background-color: #fff;
+  transition: left 0.5s ease-in-out;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Modal Aberto */
+.modal-filter.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-filter.show .modal-filter-content {
+  left: 0;
+}
+
+.modal-filter-content h2 {
+  margin-top: 0;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.filter-section {
+  margin-bottom: 20px;
+}
+
+.filter-section h3 {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.filter-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.filter-section ul li {
+  margin: 10px 0;
+}
+
+.filter-section ul li label {
+  margin-left: 10px;
+}
+
+.apply-filter {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  width: 100%;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* Modal Fechando */
+.modal-filter.hiding {
+  opacity: 0;
+}
+
+.modal-filter.hiding .modal-filter-content {
+  left: -100%;
+}
+
+/* Botão Fechar */
+.close-filter {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Lista de Produtos */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 20px;
+}
+
+.product-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 5px;
+  text-align: center;
+}
+
+.product-card img {
+  width: 100%;
+  height: auto; /* Altura fixa para as imagens */
+  object-fit: cover; /* Garante que a imagem cubra o espaço */
+}
+
+.product-card h3 {
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+.product-card .price {
+  font-size: 16px;
+  color: #000;
+}
+
+/* Paginação */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.page-btn {
+  background-color: transparent;
+  color: #000;
+  border: 1px solid #ddd;
+  padding: 10px 15px;
+  margin: 0 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+}
+
+.page-btn.active {
+  background-color: #000;
+  color: #fff;
+}
+
+.page-btn i {
+  font-size: 14px;
+}
+
+/* Responsivo */
+@media (max-width: 1600px) {
+  .content {
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+}

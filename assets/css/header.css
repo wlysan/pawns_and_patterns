@@ -1,0 +1,282 @@
+header.scrolled {
+  background-color: rgba(0, 0, 0, 0.9);
+  transform: translateY(-100%);
+}
+
+header.visible {
+  transform: translateY(0);
+}
+
+.container-header {
+  display: flex;
+  width: 100%;
+  height: 100px;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(37, 37, 37, 0.4);
+  padding: 0px 50px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: all 0.5s ease;
+  z-index: 1000;
+}
+
+.container-ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  font-family: "Poppins", sans-serif;
+  text-transform: uppercase;
+  align-items: center;
+  list-style-type: none;
+  gap: 20px;
+  margin-right: 2rem;
+  margin-top: 1rem;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #fff;
+  font-size: 12px;
+  letter-spacing: 1px;
+  font-weight: 400;
+}
+
+.nav-link:hover {
+  color: rgb(0, 0, 0);
+}
+
+.container-logo {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  left: 51.2%;
+  transform: translateX(-50%);
+}
+
+.logo-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container-right {
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+  align-items: center;
+  gap: 20px;
+}
+
+.logo-image {
+  height: 120px;
+  width: auto;
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%)
+    contrast(100%);
+  clip-path: inset(15%);
+}
+
+.logo-text {
+  font-family: "Old Standard TT", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 20px;
+  color: white;
+  margin-right: -25px;
+  margin-left: -35px;
+  text-transform: uppercase;
+}
+
+.link-logo {
+  text-decoration: none;
+}
+
+.search-link {
+  color: #fff;
+}
+
+.menu-icon {
+  display: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Estilos para o modal do menu principal */
+.modal {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 70%;
+  height: 100%;
+  background-color: rgb(37, 37, 37);
+  z-index: 1001;
+  transform: translateX(-100%);
+  transition: transform 0.5s ease;
+}
+
+.modal.open {
+  display: block;
+  transform: translateX(0);
+}
+
+.modal-content {
+  background-color: rgb(37, 37, 37);
+  padding: 40px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.modal-content ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.modal-content ul li {
+  margin: 20px 0;
+}
+
+.modal-content ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.modal-content ul li a:hover {
+  color: #ccc;
+}
+
+.close-modal {
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+/* Estilos para o modal de país/idioma */
+.modal-country-language {
+  display: flex;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 500px;
+  height: 100%;
+  background-color: rgb(37, 37, 37);
+  z-index: 1002;
+  transform: translateX(100%);
+  transition: transform 0.5s ease;
+}
+
+.modal-country-language.open {
+  display: block;
+  transform: translateX(0);
+}
+
+.modal-country-language-content {
+  padding: 40px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.modal-country-language-content h2 {
+  color: white;
+  font-size: 18px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.dropdown {
+  margin-bottom: 20px;
+}
+
+.dropdown select {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.dropdown select option {
+  background-color: rgba(37, 37, 37, 0.9);
+  color: white;
+}
+
+.update-button {
+  width: 100%;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+.update-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.country-language-btn {
+  background: none;
+  font-family: "Poppins", sans-serif;
+  border: none;
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.country-language-btn i {
+  font-size: 10px;
+}
+
+@media (max-width: 1000px) {
+  .container-ul,
+  .container-right {
+    display: none;
+  }
+
+  .menu-icon {
+    display: block;
+  }
+
+  .modal-country-language {
+    width: 100%;
+  }
+}
+
+@media (max-width: 430px) {
+  .logo-image {
+    height: 120px;
+  }
+
+  .modal {
+    width: 100%;
+  }
+
+  .modal-content {
+    width: 100%;
+  }
+
+  .container-header {
+    padding: 0px 20px;
+  }
+}

@@ -1,0 +1,381 @@
+/**
+ * Estilos para o módulo de categorias de produtos
+ * Paws&Patterns - Pet Boutique (Irlanda)
+ */
+
+ .category-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.category-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.category-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+}
+
+.category-actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* Estilos para a tabela de categorias */
+.categories-table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+.categories-table th,
+.categories-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.categories-table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #333;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+}
+
+.categories-table tr:hover {
+    background-color: #f5f7fa;
+}
+
+.categories-table .subcategory {
+    position: relative;
+}
+
+.subcategory-indicator {
+    color: #666;
+    margin-right: 5px;
+    font-weight: normal;
+}
+
+/* Badge de status */
+.status-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-active, .status-ativo {
+    background-color: #d1fae5;
+    color: #047857;
+}
+
+.status-inactive, .status-inativo {
+    background-color: #fef3c7;
+    color: #b45309;
+}
+
+.status-pending, .status-pendente {
+    background-color: #dbeafe;
+    color: #1e40af;
+}
+
+.status-disabled, .status-desabilitado {
+    background-color: #f3f4f6;
+    color: #6b7280;
+}
+
+/* Formulário de categorias */
+.category-form {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #333;
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-control:focus {
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.form-select {
+    display: block;
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+textarea.form-control {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Botões de ação */
+.btn {
+    display: inline-block;
+    font-weight: 500;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 4px;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #000;
+    border-color: #000;
+}
+
+.btn-primary:hover {
+    background-color: #333;
+    border-color: #333;
+}
+
+.btn-secondary {
+    color: #212529;
+    background-color: #f8f9fa;
+    border-color: #f8f9fa;
+}
+
+.btn-secondary:hover {
+    background-color: #e2e6ea;
+    border-color: #dae0e5;
+}
+
+.btn-danger {
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    border-radius: 0.2rem;
+}
+
+.btn-table {
+    margin-right: 5px;
+}
+
+/* Atributos dinâmicos */
+.dynamic-attributes {
+    margin-top: 20px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 15px;
+    background-color: #f8f9fa;
+}
+
+.attribute-help {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-bottom: 15px;
+}
+
+.attribute-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.attribute-row .form-control {
+    flex: 1;
+}
+
+.attr-key {
+    flex: 0.4;
+}
+
+.attr-value {
+    flex: 0.6;
+}
+
+.add-attribute-btn {
+    margin-top: 10px;
+}
+
+/* Alertas */
+.alert {
+    position: relative;
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+}
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+/* Estilos para erros de formulário */
+.text-danger {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 4px;
+}
+
+/* Modal de confirmação */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: 400px;
+    max-width: 90%;
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.modal-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.modal-body {
+    margin-bottom: 20px;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* Estilos para o toggle de categorias */
+.category-toggle {
+    cursor: pointer;
+    margin-right: 8px;
+    display: inline-block;
+    width: 16px;
+    text-align: center;
+}
+
+.category-toggle i {
+    transition: transform 0.2s ease-in-out;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Margem para botões de ação e layout */
+.mt-4 {
+    margin-top: 1.5rem;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .category-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .category-actions {
+        margin-top: 15px;
+    }
+    
+    .categories-table {
+        font-size: 0.85rem;
+    }
+    
+    .categories-table th,
+    .categories-table td {
+        padding: 8px 10px;
+    }
+    
+    .attribute-row {
+        flex-direction: column;
+        gap: 5px;
+    }
+}
+
+/* Centralização de texto */
+.text-center {
+    text-align: center;
+}

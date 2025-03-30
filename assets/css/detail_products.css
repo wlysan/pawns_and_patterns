@@ -1,0 +1,470 @@
+/* Layout da Página */
+.product-page {
+  display: flex;
+  flex-wrap: wrap; /* Permite que as colunas se ajustem em telas menores */
+  max-width: 1200px;
+  margin: 90px auto 20px;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.product-gallery {
+  flex: 1 1 100%; /* Ocupa 100% da largura em telas pequenas */
+  margin-right: 0; /* Remove a margem em telas pequenas */
+  margin-bottom: 20px; /* Adiciona espaço abaixo da galeria */
+}
+
+.product-details {
+  flex: 1 1 100%; /* Ocupa 100% da largura em telas pequenas */
+}
+
+/* Galeria de Imagens */
+.main-image img {
+  width: 100%;
+  height: auto;
+  border: 1px solid #ddd;
+}
+
+.thumbnails {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  overflow-x: auto; /* Permite rolagem horizontal em telas pequenas */
+}
+
+.thumbnails img {
+  width: 80px; /* Tamanho menor para telas pequenas */
+  height: 80px;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  transition: border-color 0.3s;
+}
+
+.thumbnails img:hover {
+  border-color: #000;
+}
+
+/* Detalhes do Produto */
+.product-title {
+  font-size: 1.5rem; /* Tamanho menor para telas pequenas */
+  margin-bottom: 10px;
+}
+
+.product-price {
+  font-size: 1.25rem; /* Tamanho menor para telas pequenas */
+  color: #000;
+  margin-bottom: 20px;
+}
+
+.product-description {
+  font-size: 0.9rem; /* Tamanho menor para telas pequenas */
+  color: #666;
+  margin-bottom: 20px;
+}
+
+/* Botão de Comprar */
+.add-to-cart {
+  width: 100%;
+  padding: 15px;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #000;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-to-cart:hover {
+  background-color: #333;
+}
+
+/* Detalhes Adicionais */
+.additional-details {
+  background-color: #eeeeee;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.additional-details h3 {
+  font-size: 1.1rem; /* Tamanho menor para telas pequenas */
+  margin-bottom: 10px;
+}
+
+.additional-details ul {
+  list-style: none;
+}
+
+.additional-details ul li {
+  margin-bottom: 5px;
+  font-size: 0.9rem; /* Tamanho menor para telas pequenas */
+  color: #666;
+}
+
+.additional-details ul li strong {
+  color: #000;
+}
+
+/* Media Queries para Responsividade */
+
+/* Telas médias (tablets) */
+@media (min-width: 768px) {
+  .product-gallery {
+    flex: 1 1 50%; /* Ocupa 50% da largura em telas médias */
+    margin-right: 20px; /* Adiciona margem à direita */
+    margin-bottom: 0; /* Remove a margem inferior */
+  }
+
+  .product-details {
+    flex: 1 1 45%; /* Ocupa 45% da largura em telas médias */
+  }
+
+  .product-title {
+    font-size: 1.75rem; /* Aumenta o tamanho do título */
+  }
+
+  .product-price {
+    font-size: 1.5rem; /* Aumenta o tamanho do preço */
+  }
+
+  .product-description {
+    font-size: 1rem; /* Aumenta o tamanho da descrição */
+  }
+
+  .thumbnails img {
+    width: 100px; /* Aumenta o tamanho das miniaturas */
+    height: 100px;
+  }
+}
+
+/* Telas grandes (desktops) */
+@media (min-width: 1024px) {
+  .product-gallery {
+    flex: 1 1 40%; /* Ocupa 40% da largura em telas grandes */
+  }
+
+  .product-details {
+    flex: 1 1 55%; /* Ocupa 55% da largura em telas grandes */
+  }
+
+  .product-title {
+    font-size: 2rem; /* Aumenta o tamanho do título */
+  }
+
+  .product-price {
+    font-size: 1.75rem; /* Aumenta o tamanho do preço */
+  }
+
+  .product-description {
+    font-size: 1.1rem; /* Aumenta o tamanho da descrição */
+  }
+
+  .thumbnails img {
+    width: 120px; /* Aumenta o tamanho das miniaturas */
+    height: 120px;
+  }
+}
+
+.color-picker {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: #eeeeee;
+  margin-bottom: 20px;
+  padding: 10px;
+  gap: 10px;
+}
+
+.color-options {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10px;
+}
+
+.color-option {
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+.color-option:hover {
+  transform: scale(1.1);
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+input[type="radio"]:checked + .color-option {
+  border-color: #000000;
+  opacity: 1;
+}
+input[type="radio"]:checked + .black {
+  background-color: rgba(0, 0, 0, 1);
+  border-color: #000000;
+  opacity: 1;
+}
+input[type="radio"]:checked + .blue {
+  background-color: rgba(0, 0, 255, 1);
+  border-color: #000000;
+  opacity: 1;
+}
+input[type="radio"]:checked + .green {
+  background-color: rgba(0, 128, 0, 1);
+  border-color: #000000;
+  opacity: 1;
+}
+input[type="radio"]:checked + .yellow {
+  background-color: rgba(255, 255, 0, 1);
+  border-color: #000000;
+  opacity: 1;
+}
+input[type="radio"]:checked + .red {
+  background-color: rgba(255, 0, 0, 1);
+  border-color: #000000;
+  opacity: 1;
+}
+
+/* Cores das opções */
+.red {
+  background-color: rgba(255, 0, 0, 0.6);
+}
+.blue {
+  background-color: rgba(0, 0, 255, 0.6);
+}
+.green {
+  background-color: rgba(0, 128, 0, 0.6);
+}
+.yellow {
+  background-color: rgba(255, 255, 0, 0.6);
+}
+.black {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+/* Estilos para o seletor de tamanho */
+.size-picker {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: #eeeeee;
+  margin-bottom: 20px;
+  padding: 10px;
+  gap: 10px;
+}
+
+.size-options {
+  display: flex;
+  gap: 10px;
+}
+
+.size-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  line-height: 31px;
+  text-align: center;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.size-option:hover {
+  border-color: #000000;
+  background-color: #f0f0f0;
+}
+
+/* Estilo para o tamanho selecionado */
+input[type="radio"]:checked + .size-option {
+  border-color: #000;
+  background-color: #000000;
+  color: #fff;
+}
+
+.size-guide {
+  display: flex;
+  align-items: center;
+}
+
+.text-guide-size {
+  font-size: 12px;
+  margin: auto;
+}
+
+@media (max-width: 993px) {
+  .size-picker {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 993px) {
+  .color-picker {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 767px) {
+  .color-picker {
+    display: flex;
+    justify-content: start;
+  }
+}
+
+@media (max-width: 612px) {
+  .color-picker {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+/* styles.css */
+
+/* Estilo do modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Conteúdo do modal */
+.modal-conteudo {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 600px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Botão de fechar */
+.fechar {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.fechar:hover,
+.fechar:focus {
+  color: black;
+  text-decoration: none;
+}
+
+.modal-size {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.modal-content-size {
+  background: white;
+  width: 50%;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+}
+.close-modal-size {
+  float: right;
+  font-size: 24px;
+  cursor: pointer;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+th {
+  background: #f4f4f4;
+}
+
+/* Estilo da lupa */
+.zoom {
+  display: none;
+  position: absolute; /* Importante para o posicionamento */
+  width: 250px;
+  height: 250px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  overflow: hidden;
+  pointer-events: none;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  background-repeat: no-repeat;
+  background-size: 600% 600%; /* Aumenta o zoom */
+}
+
+/* Tela cheia */
+.fullscreenBackground {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.9);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.fullscreen {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.9);
+  justify-content: center;
+  align-items: center;
+  z-index: 1100;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.fullscreen img {
+  width: 80%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  z-index: 1200;
+}
+
+.close-fullscreen {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: #fff;
+  font-size: 30px;
+  cursor: pointer;
+}

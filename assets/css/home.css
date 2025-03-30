@@ -1,0 +1,352 @@
+.header {
+    background-color: #ffffff3b;
+}
+
+/* Hero Section */
+.hero {
+  position: relative;
+  top: -62px;
+  height: 100vh;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  color: #fff;
+  overflow: hidden;
+}
+
+.background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding-bottom: 80px;
+  max-width: 600px;
+}
+
+.hero-content h1 {
+  font-size: 48px;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.hero-content p {
+  font-size: 18px;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.hero-span {
+  font-family: "Old Standard TT", serif;
+}
+
+.cta-button {
+  color: #000;
+  font-weight: 600;
+}
+
+.cta-button-last-content {
+  display: flex;
+  width: 50%;
+  flex-direction: column;
+  margin-bottom: 10px;
+  color: #000;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px;
+  border: #000 1px solid;
+  text-decoration: none;
+  text-align: center;
+}
+
+.explore {
+  display: inline-block;
+  color: #fff;
+  font-weight: 600;
+  transition: transform 0.3s ease;
+}
+
+.explore:hover {
+  transform: scale(1.1);
+}
+
+/* Seção de destaques */
+.highlights {
+  padding: 50px 0;
+  text-align: center;
+  background-color: #fff;
+}
+
+.highlights h2 {
+  font-size: 56px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.highlights p {
+  font-size: 18px;
+  margin-bottom: 40px;
+  color: var(--text-dark);
+}
+
+/* Grade de imagens */
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 40px 0;
+}
+
+.image-grid img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+.image-grid img:hover {
+  transform: scale(1.05);
+}
+
+/* Carrossel de relógios */
+.watch-carousel {
+  background-color: #fff;
+}
+
+.watch-carousel h2 {
+  font-size: 36px;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.watch-carousel .carousel-cell {
+  width: 500px;
+  margin-right: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.watch-carousel .carousel-cell img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  margin-bottom: 20px;
+  height: 60vh;
+}
+
+.watch-carousel .carousel-cell h3 {
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.watch-carousel .carousel-cell p {
+  font-size: 16px;
+  color: var(--text-dark);
+}
+
+/* Seção de imagem grande com texto sobreposto */
+.full-width-image {
+  width: 100%;
+  position: relative;
+}
+
+.full-width-image .image-container {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.full-width-image img {
+  width: 100%;
+  height: 95vh;
+  /* Altura maior para a imagem */
+  object-fit: cover;
+  /* Garante que a imagem cubra toda a área */
+  display: block;
+  margin-top: 5vh;
+}
+
+.full-width-image .overlay-text {
+  position: absolute;
+  bottom: 20px;
+  /* Posiciona o texto na parte inferior */
+  left: 200px;
+  bottom: 100px;
+  /* Posiciona o texto à esquerda */
+  text-align: left;
+  /* Alinha o texto à esquerda */
+  color: #fff;
+  max-width: 600px;
+  width: 90%;
+}
+
+.full-width-image .overlay-text h2 {
+  font-size: 36px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.full-width-image .overlay-text p {
+  font-size: 18px;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .full-width-image img {
+    height: 400px;
+    margin-top: 20px;
+    /* Altura menor para dispositivos móveis */
+  }
+
+  .full-width-image .overlay-text {
+    padding: 15px;
+    max-width: 90%;
+  }
+
+  .full-width-image .overlay-text h2 {
+    font-size: 28px;
+  }
+
+  .full-width-image .overlay-text p {
+    font-size: 16px;
+  }
+
+  .full-width-image .overlay-text {
+    padding: 10px 30px;
+    font-size: 14px;
+  }
+}
+
+/* Trocar a imagem em dispositivos menores */
+@media (max-width: 763px) {
+  .full-width-image .image-container img {
+    content: url("https://gentleman.elperiodico.com/wp-content/uploads/2025/01/Historiques-222_-2.jpg");
+    width: 100%;
+    height: 700px;
+    /* Altura menor para dispositivos móveis */
+    object-fit: cover;
+  }
+}
+
+/* Seção de imagem à esquerda e texto à direita */
+.image-text-section {
+  margin-top: 5vh;
+  background-color: #f1eee9;
+}
+
+.image-text-section h2 {
+  font-size: 36px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.image-text-section .lead {
+  font-size: 24px;
+  font-weight: 400;
+  margin-bottom: 20px;
+  color: var(--text-dark);
+}
+
+.image-text-section p {
+  font-size: 18px;
+  margin-bottom: 30px;
+  line-height: 1.6;
+  color: var(--text-dark);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .image-text-section h2 {
+    font-size: 28px;
+  }
+
+  .image-text-section .lead {
+    font-size: 20px;
+  }
+
+  .image-text-section p {
+    font-size: 16px;
+  }
+}
+
+/* Seção de texto à esquerda e imagem à direita */
+.text-image-section {  
+  background-color: #fff;
+}
+
+.text-image-section h2 {
+  font-size: 36px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.text-image-section .lead {
+  font-size: 24px;
+  font-weight: 400;
+  margin-bottom: 20px;
+  color: var(--text-dark);
+}
+
+.text-image-section p {
+  font-size: 18px;
+  margin-bottom: 30px;
+  line-height: 1.6;
+  color: var(--text-dark);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+
+  .text-image-section .lead {
+    font-size: 20px;
+  }
+
+  .text-image-section p {
+    font-size: 16px;
+  }
+}
+
+/* Seção de carrossel de vídeos */
+.video-carousel {  
+  margin-top: 5vh;
+}
+
+
+.video-carousel .carousel-cell {
+  width: 100%;
+  overflow: hidden;
+}
+
+.video-carousel .carousel-video {
+  width: 100%;
+  height: auto; /* Altura fixa para os vídeos */
+  object-fit: contain; /* Garante que o vídeo cubra toda a área */
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .video-carousel .carousel-video {
+    height: 300px; /* Altura menor para dispositivos móveis */
+  }
+
+  .cta-button .cta-button-last-content {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+}

@@ -1,0 +1,81 @@
+/**
+ * Estilos para o menu lateral do plugin de produtos
+ * Paws&Patterns - Pet Boutique (Irlanda)
+ */
+
+/* Estilos específicos para o submenu */
+.submenu-title {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #6c757d;
+    padding: 0.5rem 1rem;
+    margin-top: 0.75rem;
+    letter-spacing: 0.5px;
+}
+
+.divider {
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.1);
+    margin: 0.5rem 1rem;
+}
+
+/* Estilo para itens de submenu */
+#productSubmenu .nav-link {
+    padding-left: 2.5rem;
+    font-size: 0.9rem;
+}
+
+#productSubmenu .icon-box {
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    border-radius: 4px;
+    background-color: transparent;
+    color: #495057;
+    margin-right: 0.75rem;
+}
+
+#productSubmenu .nav-link.active .icon-box {
+    background-color: rgba(0, 0, 0, 0.1);
+    color: #000;
+}
+
+/* Animação para o ícone de seta */
+.collapse-icon {
+    transition: transform 0.3s ease;
+}
+
+.dropdown-toggle[aria-expanded="true"] .collapse-icon {
+    transform: rotate(180deg);
+}
+
+/* Estilos para o breadcrumb */
+.breadcrumb-container {
+    background-color: transparent;
+    margin-bottom: 1.5rem;
+}
+
+.breadcrumb {
+    padding: 0.5rem 0;
+    margin-bottom: 0;
+    background-color: transparent;
+    border-radius: 0;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    content: ">";
+}
+
+/* Estilos para título da página */
+.page-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.page-subtitle {
+    color: #6c757d;
+    margin-bottom: 1.5rem;
+}

@@ -1,0 +1,2493 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Guia de Documentação da API</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+            overflow-x: hidden;
+        }
+
+        .navigation {
+            background-color: #f8f9fa;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        .navigation a {
+            margin-right: 10px;
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        .navigation a:hover {
+            text-decoration: underline;
+        }
+
+        .endpoint {
+            display: none;
+        }
+
+        .endpoint.active {
+            display: block;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #333;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+
+        .section {
+            background-color: white;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .method {
+            font-weight: bold;
+            color: #28a745;
+            margin-right: 10px;
+        }
+
+        .url {
+            color: #6c757d;
+            font-family: monospace;
+        }
+
+        .description {
+            color: #495057;
+            margin-bottom: 10px;
+        }
+
+        .parameters,
+        .response {
+            margin-top: 10px;
+            background-color: #f1f3f5;
+            padding: 10px;
+            border-radius: 3px;
+        }
+
+        .example {
+            background-color: #e9ecef;
+            border-radius: 3px;
+            padding: 10px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            overflow-x: auto;
+        }
+
+        .note {
+            background-color: #e7f3fe;
+            border-left: 4px solid #2196F3;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        .sidebar {
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            background-color: #f8f9fa;
+            padding-top: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .content {
+            margin-left: 50px;
+            padding: 20px;
+        }
+
+        .endpoint {
+            display: none;
+        }
+
+        .endpoint.active {
+            display: block;
+        }
+
+        .item {
+            margin-top: 50px;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.show {
+                transform: translateX(0);
+            }
+
+            .content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="sidebar col-md-3 col-lg-2">
+        <div class="nav flex-column">
+            <a class="nav-link" href="#" data-section="registro-usuario">1. Registro de Usuário</a>
+            <a class="nav-link" href="#" data-section="login-usuario">2. Login de Usuário</a>
+            <a class="nav-link" href="#" data-section="gerenciamento-produtos">2. Gerenciamento de Produtos</a>
+            <a class="nav-link" href="#" data-section="gerenciamento-categorias">3. Gerenciamento de Categorias
+                de Produtos</a>
+            <a class="nav-link" href="#" data-section="gerenciamento-sessoes">4. Gerenciamento de Sessões</a>
+            <a class="nav-link" href="#" data-section="gerenciamento-tipos-usuario">5. Gerenciamento de Tipos de
+                Usuário</a>
+            <a class="nav-link" href="#" data-section="gerenciamento-grupos-usuario">6. Gerenciamento de Grupos
+                de Usuário</a>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row">
+
+
+            <main class="content col-md-9 ms-sm-auto col-lg-auto px-md-4">
+                <button class="btn btn-primary d-md-none toggle-sidebar">Menu</button>
+
+                <h1>Guia Completo de Documentação da API</h1>
+
+                <div class="section">
+                    <h2>Introdução</h2>
+                    <p>Esta documentação fornece uma visão detalhada de todos os endpoints de API disponíveis em nosso
+                        sistema. Cada
+                        endpoint é explicado com seus parâmetros, exemplos de uso e possíveis respostas.</p>
+                </div>
+
+                <div class="section">
+                    <h2>Autenticação</h2>
+                    <p>Todos os endpoints, exceto registro de usuário, requerem autenticação via token de sessão:</p>
+                    <ol>
+                        <li>Registre-se usando o endpoint de registro</li>
+                        <li>Faça login para receber um token de sessão</li>
+                        <li>Inclua o token no cabeçalho Authorization: Bearer {token}</li>
+                    </ol>
+                    <div class="note">
+                        <strong>Importante:</strong> Os tokens de sessão têm tempo de expiração. Use o endpoint de
+                        renovação para
+                        manter a sessão ativa.
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>Domínios de API</h2>
+
+                    <!-- User Registration Section -->
+                    <div id="registro-usuario" class="endpoint active">
+                        <h3>1. Registro de Usuário</h3>
+                        <div class="item">
+                            <span class="method">POST</span>
+                            <span class="url">/registrarUsuario</span>
+                            <p class="description">Registra um novo usuário no sistema</p>
+
+                            <div class="parameters">
+                                <strong>Parâmetros:</strong>
+                                <ul>
+                                    <li><code>nome</code> (string, obrigatório): Nome completo do usuário</li>
+                                    <li><code>email</code> (string, obrigatório): Endereço de e-mail único</li>
+                                    <li><code>senha</code> (string, obrigatório): Senha com no mínimo 8 caracteres</li>
+                                    <li><code>tipo_usuario</code> (string, opcional): Tipo de usuário (padrão:
+                                        'cliente')</li>
+                                    <li><code>telefone</code> (string, opcional): Número de telefone do usuário</li>
+                                </ul>
+                            </div>
+
+                            <div class="example">
+                                // Exemplo de requisição
+                                {
+                                "nome": "Maria Silva Santos",
+                                "email": "maria.silva@exemplo.com",
+                                "senha": "SenhaForte@2025",
+                                "tipo_usuario": "cliente",
+                                "telefone": "+55 (11) 98765-4321"
+                                }
+
+                                // Resposta de sucesso
+                                {
+                                "status": "sucesso",
+                                "mensagem": "Usuário registrado com sucesso",
+                                "id_usuario": 9876,
+                                "email": "maria.silva@exemplo.com"
+                                }
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <span class="method">GET</span>
+                            <span class="url">/listarUsuarios</span>
+                            <p class="description">Lista todos os usuários registrados (requer permissão de
+                                administrador)</p>
+
+                            <div class="parameters">
+                                <strong>Parâmetros de Consulta:</strong>
+                                <ul>
+                                    <li><code>pagina</code> (integer, opcional): Número da página (padrão: 1)</li>
+                                    <li><code>limite</code> (integer, opcional): Número de resultados por página
+                                        (padrão: 10)</li>
+                                    <li><code>tipo_usuario</code> (string, opcional): Filtrar por tipo de usuário</li>
+                                </ul>
+                            </div>
+
+                            <div class="example">
+
+                                // Resposta de sucesso
+                                {
+                                "status": "sucesso",
+                                "total_usuarios": 50,
+                                "pagina_atual": 1,
+                                "usuarios": [
+                                {
+                                "id": 9876,
+                                "nome": "Maria Silva Santos",
+                                "email": "maria.silva@exemplo.com",
+                                "tipo_usuario": "cliente",
+                                "data_registro": "2025-02-11T19:10:00Z"
+                                },
+                                {
+                                "id": 9877,
+                                "nome": "João Pereira",
+                                "email": "joao.pereira@exemplo.com",
+                                "tipo_usuario": "cliente",
+                                "data_registro": "2025-02-10T15:30:00Z"
+                                }
+                                ]
+                                }
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <span class="method">GET</span>
+                            <span class="url">/buscarUsuario</span>
+                            <p class="description">Busca informações de um usuário específico</p>
+
+                            <div class="parameters">
+                                <strong>Parâmetros:</strong>
+                                <ul>
+                                    <li><code>email</code> (string, obrigatório): E-mail do usuário</li>
+                                </ul>
+                            </div>
+
+                            <div class="example">
+
+                                // Exemplo de requisição
+                                {
+                                "email": "maria.silva@exemplo.com",
+                                }
+
+                                // Resposta de sucesso
+                                {
+                                "status": "sucesso",
+                                "usuario": {
+                                "id": 9876,
+                                "nome": "Maria Silva Santos",
+                                "email": "maria.silva@exemplo.com",
+                                "tipo_usuario": "cliente",
+                                "telefone": "+55 (11) 98765-4321",
+                                "data_registro": "2025-02-11T19:10:00Z",
+                                "ultimo_login": "2025-02-11T19:15:00Z"
+                                }
+                                }
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <span class="method">PUT</span>
+                            <span class="url">/atualizarUsuario</span>
+                            <p class="description">Atualiza informações do usuário</p>
+
+                            <div class="parameters">
+                                <strong>Parâmetros:</strong>
+                                <ul>
+                                    <li><code>email</code> (string, obrigatório): E-mail do usuário</li>
+                                    <li><code>nome</code> (string, opcional): Novo nome do usuário</li>
+                                    <li><code>telefone</code> (string, opcional): Novo número de telefone</li>
+                                    <li><code>tipo_usuario</code> (string, opcional): Atualizar tipo de usuário</li>
+                                </ul>
+                            </div>
+
+                            <div class="example">
+                                // Exemplo de requisição
+                                {
+                                "email": "maria.silva@exemplo.com",
+                                "nome": "Maria Silva Santos Oliveira",
+                                "telefone": "+55 (11) 99999-8888",
+                                "tipo_usuario": "premium"
+                                }
+
+                                // Resposta de sucesso
+                                {
+                                "status": "sucesso",
+                                "mensagem": "Usuário atualizado com sucesso",
+                                "usuario_atualizado": {
+                                "nome": "Maria Silva Santos Oliveira",
+                                "telefone": "+55 (11) 99999-8888",
+                                "tipo_usuario": "premium"
+                                }
+                                }
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <span class="method">PUT</span>
+                            <span class="url">/desativarUsuario</span>
+                            <p class="description">Desativa a conta do usuário</p>
+
+                            <div class="parameters">
+                                <strong>Parâmetros:</strong>
+                                <ul>
+                                    <li><code>email</code> (string, obrigatório): E-mail do usuário</li>
+                                    <li><code>motivo</code> (string, opcional): Motivo da desativação</li>
+                                </ul>
+                            </div>
+
+                            <div class="example">
+                                // Exemplo de requisição
+                                {
+                                "email": "maria.silva@exemplo.com",
+                                "motivo": "Solicitação do usuário"
+                                }
+
+                                // Resposta de sucesso
+                                {
+                                "status": "sucesso",
+                                "mensagem": "Usuário desativado com sucesso",
+                                "data_desativacao": "2025-02-11T19:20:00Z"
+                                }
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <span class="method">PUT</span>
+                            <span class="url">/deletarUsuario</span>
+                            <p class="description">Reativa uma conta de usuário previamente desativada</p>
+
+                            <div class="parameters">
+                                <strong>Parâmetros:</strong>
+                                <ul>
+                                    <li><code>email</code> (string, obrigatório): E-mail do usuário</li>
+                                </ul>
+                            </div>
+
+                            <div class="example">
+                                // Exemplo de requisição
+                                {
+                                "email": "maria.silva@exemplo.com"
+                                }
+
+                                // Resposta de sucesso
+                                {
+                                "status": "sucesso",
+                                "mensagem": "Usuário reativado com sucesso",
+                                "data_reativacao": "2025-02-11T19:25:00Z"
+                                }
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <span class="method">DELETE</span>
+                            <span class="url">/reativarUsuario</span>
+                            <p class="description">Deleta a conta do usuário (remoção parcial)</p>
+
+                            <div class="parameters">
+                                <strong>Parâmetros:</strong>
+                                <ul>
+                                    <li><code>email</code> (string, obrigatório): E-mail do usuário</li>
+                                    <li><code>motivo</code> (string, opcional): Motivo da deleção</li>
+                                </ul>
+                            </div>
+
+                            <div class="example">
+                                // Exemplo de requisição
+                                {
+                                "email": "maria.silva@exemplo.com",
+                                "motivo": "Solicitação do usuário"
+                                }
+
+                                // Resposta de sucesso
+                                {
+                                "status": "sucesso",
+                                "mensagem": "Usuário deletado com sucesso",
+                                "data_delecao": "2025-02-11T19:30:00Z"
+                                }
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <span class="method">DELETE</span>
+                            <span class="url">/deletarUsuarioCompleto</span>
+                            <p class="description">Deleta completamente os dados do usuário do sistema</p>
+
+                            <div class="parameters">
+                                <strong>Parâmetros:</strong>
+                                <ul>
+                                    <li><code>email</code> (string, obrigatório): E-mail do usuário</li>
+                                    <li><code>motivo</code> (string, opcional): Motivo da deleção completa</li>
+                                </ul>
+                            </div>
+
+                            <div class="example">
+                                // Exemplo de requisição
+                                {
+                                "email": "maria.silva@exemplo.com",
+                                "motivo": "Solicitação LGPD"
+                                }
+
+                                // Resposta de sucesso
+                                {
+                                "status": "sucesso",
+                                "mensagem": "Todos os dados do usuário foram removidos completamente",
+                                "data_delecao_completa": "2025-02-11T19:35:00Z"
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="login-usuario" class="endpoint">
+                        <h3>2. Login de Usuário</h3>
+
+                        <div class="item">
+                            <span class="method">POST</span>
+                            <span class="url">/autenticarUsuario</span>
+                            <p class="description">Autentica um usuário no sistema</p>
+
+                            <div class="parameters">
+                                <strong>Parâmetros:</strong>
+                                <ul>
+                                    <li><code>email</code> (string, obrigatório): Email do usuário</li>
+                                    <li><code>senha</code> (string, obrigatório): Senha do usuário</li>
+                                </ul>
+                            </div>
+
+                            <div class="example">
+                                // Exemplo de requisição
+                                {
+                                "email": "usuario@exemplo.com",
+                                "senha": "senha123"
+                                }
+
+                                // Resposta de sucesso
+                                {
+                                "status": "sucesso",
+                                "mensagem": "Usuário autenticado com sucesso."
+                                }
+
+                                // Respostas de erro possíveis
+                                {
+                                "status": "erro",
+                                "mensagem": "E-mail e senha são obrigatórios."
+                                }
+                                {
+                                "status": "erro",
+                                "mensagem": "Usuário não encontrado ou senha incorreta."
+                                }
+                                {
+                                "status": "erro",
+                                "mensagem": "Usuário está inativo."
+                                }
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <span class="method">POST</span>
+                            <span class="url">/verificarStatusUsuario</span>
+                            <p class="description">Verifica se a sessão do usuário está válida</p>
+
+                            <div class="parameters">
+                                <strong>Parâmetros:</strong>
+                                <ul>
+                                    <li><code>email</code> (string, obrigatório): Email do usuário</li>
+                                </ul>
+                            </div>
+
+                            <div class="example">
+                                // Exemplo de requisição
+                                {
+                                "email": "usuario@exemplo.com"
+                                }
+
+                                // Resposta de sucesso
+                                {
+                                "status": "sucesso",
+                                "mensagem": "Sessão válida."
+                                }
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <span class="method">POST</span>
+                            <span class="url">/alterarSenha</span>
+                            <p class="description">Lista o histórico de login do usuário</p>
+
+                            <div class="parameters">
+                                <strong>Parâmetros:</strong>
+                                <ul>
+                                    <li><code>email</code> (string, obrigatório): Email do usuário</li>
+                                </ul>
+                            </div>
+
+                            <div class="example">
+                                // Exemplo de requisição
+                                {
+                                "email": "usuario@exemplo.com"
+                                }
+
+                                // Resposta de sucesso
+                                {
+                                "status": "sucesso",
+                                "dados": [
+                                {
+                                "data_hora": "2025-02-12 10:30:00",
+                                "endereco_ip": "192.168.1.1",
+                                "informacao_dispositivo": "Mozilla/5.0...",
+                                "sucesso": true,
+                                "motivo_falha": null
+                                }
+                                ]
+                                }
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <span class="method">POST</span>
+                            <span class="url">/api_login_usuario.php?acao=alterar_senha</span>
+                            <p class="description">Altera a senha do usuário</p>
+
+                            <div class="parameters">
+                                <strong>Parâmetros:</strong>
+                                <ul>
+                                    <li><code>email</code> (string, obrigatório): Email do usuário</li>
+                                    <li><code>senha_atual</code> (string, obrigatório): Senha atual do usuário</li>
+                                    <li><code>nova_senha</code> (string, obrigatório): Nova senha do usuário</li>
+                                </ul>
+                            </div>
+
+                            <div class="example">
+                                // Exemplo de requisição
+                                {
+                                "email": "usuario@exemplo.com",
+                                "senha_atual": "senha123",
+                                "nova_senha": "novaSenha456"
+                                }
+
+                                // Resposta de sucesso
+                                {
+                                "status": "sucesso",
+                                "mensagem": "Senha alterada com sucesso."
+                                }
+
+                                // Respostas de erro possíveis
+                                {
+                                "status": "erro",
+                                "mensagem": "Dados para alteração de senha inválidos."
+                                }
+                                {
+                                "status": "erro",
+                                "mensagem": "Senha atual incorreta."
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Management Section -->
+                    <div id="gerenciamento-produtos" class="endpoint">
+                        <h3>2. Gerenciamento de Produtos</h3>
+
+                        <div class="item">
+                            <span class="method">POST</span>
+                            <span class="url">/plugins/produtos/controllers/api_produtos_controller.php</span>
+                            <h5 class="description">Cria um novo produto no sistema</h5>
+
+                            <div class="parameters">
+                                <strong>Parâmetros JSON:</strong>
+                                <ul>
+                                    <li><code>acao</code> (string, obrigatório): "criarProduto"</li>
+                                    <li><code>nome</code> (string, obrigatório): Nome do produto</li>
+                                    <li><code>marca</code> (string, obrigatório): Marca do produto</li>
+                                    <li><code>preco_base</code> (number, obrigatório): Preço base do produto</li>
+                                    <li><code>descricao</code> (string, opcional): Descrição detalhada do produto</li>
+                                    <li><code>edicao_limitada</code> (boolean, opcional): Indica se é edição limitada
+                                    </li>
+                                    <li><code>numero_serie</code> (string, opcional): Número de série do produto</li>
+                                    <li><code>categorias</code> (array, opcional): Lista de IDs das categorias</li>
+                                    <li><code>variacoes</code> (array, opcional): Lista de variações do produto com os
+                                        campos:
+                                        <ul>
+                                            <li><code>sku</code> (string): Código SKU da variação</li>
+                                            <li><code>tamanho</code> (string): Tamanho da variação</li>
+                                            <li><code>cor</code> (string): Cor da variação</li>
+                                            <li><code>peso</code> (number): Peso da variação</li>
+                                            <li><code>material</code> (string): Material da variação</li>
+                                            <li><code>preco</code> (number): Preço da variação</li>
+                                            <li><code>quantidade_estoque</code> (integer): Quantidade em estoque</li>
+                                            <li><code>limite_minimo_estoque</code> (integer): Limite mínimo de estoque
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="example">
+                                // Exemplo de requisição
+                                {
+                                "acao": "criarProduto",
+                                "nome": "Tênis Runner Pro",
+                                "marca": "SportBrand",
+                                "preco_base": 299.99,
+                                "descricao": "Tênis para corrida profissional",
+                                "edicao_limitada": false,
+                                "categorias": [1, 3],
+                                "variacoes": [
+                                {
+                                "sku": "TRP-001-38-PRE",
+                                "tamanho": "38",
+                                "cor": "Preto",
+                                "peso": 0.4,
+                                "material": "Mesh",
+                                "preco": 299.99,
+                                "quantidade_estoque": 50,
+                                "limite_minimo_estoque": 5
+                                }
+                                ]
+                                }
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <span class="method">POST</span>
+                            <span class="url">/plugins/produtos/controllers/api_produtos_controller.php</span>
+                            <h5 class="description">Lista todos os produtos ativos com suas variações e categorias</h5>
+
+                            <div class="parameters">
+                                <strong>Parâmetros JSON:</strong>
+                                <ul>
+                                    <li><code>acao</code> (string, obrigatório): "listarProdutos"</li>
+                                    <li><code>limite</code> (número, opcional): Quantidade máxima de produtos a serem
+                                        retornados</li>
+                                </ul>
+                            </div>
+
+                            <div class="example">
+                                // Exemplo de requisição para listar todos os produtos
+                                {
+                                "acao": "listarProdutos"
+                                }
+
+                                // Exemplo de requisição com limite de 10 produtos
+                                {
+                                "acao": "listarProdutos",
+                                "limite": 10
+                                }
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <span class="method">POST</span>
+                            <span class="url">/plugins/produtos/controllers/api_produtos_controller.php</span>
+                            <h5 class="description">Busca informações detalhadas de um produto específico</h5>
+
+                            <div class="parameters">
+                                <strong>Parâmetros JSON:</strong>
+                                <ul>
+                                    <li><code>acao</code> (string, obrigatório): "buscarProduto"</li>
+                                    <li><code>id</code> (integer, obrigatório): ID do produto</li>
+                                </ul>
+                            </div>
+
+                            <div class="example">
+                                // Exemplo de requisição
+                                {
+                                "acao": "buscarProduto",
+                                "id": 123
+                                }
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <span class="method">POST</span>
+                            <span class="url">/plugins/produtos/controllers/api_produtos_controller.php</span>
+                            <h5 class="description">Atualiza informações de um produto existente</h5>
+
+                            <div class="parameters">
+                                <strong>Parâmetros JSON:</strong>
+                                <ul>
+                                    <li><code>acao</code> (string, obrigatório): "atualizarProduto"</li>
+                                    <li><code>id</code> (integer, obrigatório): ID do produto</li>
+                                    <li><code>nome</code> (string, opcional): Nome do produto</li>
+                                    <li><code>marca</code> (string, opcional): Marca do produto</li>
+                                    <li><code>preco_base</code> (number, opcional): Preço base do produto</li>
+                                    <li><code>descricao</code> (string, opcional): Descrição do produto</li>
+                                    <li><code>edicao_limitada</code> (boolean, opcional): Flag de edição limitada</li>
+                                    <li><code>numero_serie</code> (string, opcional): Número de série</li>
+                                    <li><code>categorias</code> (array, opcional): Lista atualizada de IDs das
+                                        categorias</li>
+                                    <li><code>variacoes</code> (array, opcional): Lista atualizada de variações</li>
+                                </ul>
+                            </div>
+
+                            <div class="example">
+                                // Exemplo de requisição
+                                {
+                                "acao": "atualizarProduto",
+                                "id": 123,
+                                "nome": "Tênis Runner Pro Max",
+                                "preco_base": 349.99,
+                                "variacoes": [
+                                {
+                                "id": 1,
+                                "preco": 349.99,
+                                "quantidade_estoque": 45
+                                }
+                                ]
+                                }
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <span class="method">POST</span>
+                            <span class="url">/plugins/produtos/controllers/api_produtos_controller.php</span>
+                            <h5 class="description">Remove ou desativa um produto do sistema</h5>
+
+                            <div class="parameters">
+                                <strong>Parâmetros JSON:</strong>
+                                <ul>
+                                    <li><code>acao</code> (string, obrigatório): "deletarProduto"</li>
+                                    <li><code>id</code> (integer, obrigatório): ID do produto a ser deletado</li>
+                                </ul>
+                            </div>
+
+                            <div class="example">
+                                // Exemplo de requisição
+                                {
+                                "acao": "deletarProduto",
+                                "id": 123
+                                }
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <span class="method">POST</span>
+                            <span class="url">/plugins/produtos/controllers/api_produtos_controller.php</span>
+                            <h5 class="description">Faz upload de uma ou mais imagens para um produto</h5>
+
+                            <div class="parameters">
+                                <strong>Parâmetros Form Data:</strong>
+                                <ul>
+                                    <li><code>id_produto</code> (integer, obrigatório): ID do produto</li>
+                                    <li><code>imagem[]</code> (file, obrigatório): Arquivos de imagem (JPG, PNG ou WebP)
+                                    </li>
+                                    <li><code>imagem_principal</code> (integer, opcional): Índice da imagem principal
+                                        (0-based)</li>
+                                    <li><code>ordem[]</code> (array, opcional): Array com a ordem das imagens</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <span class="method">POST</span>
+                            <span class="url">/plugins/produtos/controllers/api_produtos_controller.php</span>
+                            <h5 class="description">Remove uma imagem do produto</h5>
+
+                            <div class="parameters">
+                                <strong>Parâmetros JSON:</strong>
+                                <ul>
+                                    <li><code>acao</code> (string, obrigatório): "removerImagemProduto"</li>
+                                    <li><code>id_imagem</code> (integer, obrigatório): ID da imagem a ser removida</li>
+                                </ul>
+                            </div>
+
+                            <div class="example">
+                                // Exemplo de requisição
+                                {
+                                "acao": "removerImagemProduto",
+                                "id_imagem": 123
+                                }
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <span class="method">POST</span>
+                            <span class="url">/plugins/produtos/controllers/api_produtos_controller.php</span>
+                            <h5 class="description">Atualiza a ordem das imagens do produto</h5>
+
+                            <div class="parameters">
+                                <strong>Parâmetros JSON:</strong>
+                                <ul>
+                                    <li><code>acao</code> (string, obrigatório): "atualizarOrdemImagens"</li>
+                                    <li><code>imagens</code> (array, obrigatório): Lista de objetos com:
+                                        <ul>
+                                            <li><code>id</code> (integer): ID da imagem</li>
+                                            <li><code>ordem</code> (integer): Nova posição da imagem</li>
+                                            <li><code>tipo_imagem</code> (string): Tipo da imagem ('produto' ou
+                                                'variacao')</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="example">
+                                // Exemplo de requisição
+                                {
+                                "acao": "atualizarOrdemImagens",
+                                "imagens": [
+                                {
+                                "id": 1,
+                                "ordem": 0,
+                                "tipo_imagem": "produto"
+                                },
+                                {
+                                "id": 2,
+                                "ordem": 1,
+                                "tipo_imagem": "produto"
+                                }
+                                ]
+                                }
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <span class="method">POST</span>
+                            <span class="url">/plugins/produtos/controllers/api_produtos_controller.php</span>
+                            <h5 class="description">Define uma imagem como principal para o produto ou variação</h5>
+
+                            <div class="parameters">
+                                <strong>Parâmetros JSON:</strong>
+                                <ul>
+                                    <li><code>acao</code> (string, obrigatório): "definirImagemPrincipal"</li>
+                                    <li><code>id_imagem</code> (integer, obrigatório): ID da imagem</li>
+                                    <li><code>id_produto</code> (integer, obrigatório): ID do produto</li>
+                                </ul>
+                            </div>
+
+                            <div class="example">
+                                // Exemplo de requisição
+                                {
+                                "acao": "definirImagemPrincipal",
+                                "id_imagem": 123,
+                                "id_produto": 456
+                                }
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <span class="method">POST</span>
+                            <span class="url">/plugins/produtos/controllers/api_produtos_controller.php</span>
+                            <h5 class="description">Lista todas as imagens de um produto e suas variações</h5>
+
+                            <div class="parameters">
+                                <strong>Parâmetros JSON:</strong>
+                                <ul>
+                                    <li><code>acao</code> (string, obrigatório): "listarImagensProduto"</li>
+                                    <li><code>id_produto</code> (integer, obrigatório): ID do produto</li>
+                                </ul>
+                            </div>
+
+                            <div class="example">
+                                // Exemplo de requisição
+                                {
+                                "acao": "listarImagensProduto",
+                                "id_produto": 123
+                                }
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <span class="method post">POST</span>
+                            <span class="url">/plugins/produtos/controllers/api_produtos_controller.php</span>
+                            <p class="description">Busca produtos com base em diversos critérios de filtro, permitindo
+                                pesquisas flexíveis e combinadas.</p>
+
+                            <div class="notes">
+                                <p><strong>Nota:</strong> A função permite buscar produtos por texto parcial no nome.
+                                    Por exemplo, ao buscar "Cole", serão retornados produtos como "Coleira", "Coleção",
+                                    "Coleciona", etc.
+                                    Todos os filtros podem ser combinados entre si para refinar os resultados.</p>
+                            </div>
+
+                            <div class="parameters">
+                                <h3>Parâmetros:</h3>
+                                <table>
+                                    <tr>
+                                        <th>Parâmetro</th>
+                                        <th>Tipo</th>
+                                        <th>Descrição</th>
+                                        <th>Obrigatório</th>
+                                    </tr>
+                                    <tr>
+                                        <td><code>acao</code></td>
+                                        <td>string</td>
+                                        <td>Deve ser "buscarProdutosPorFiltro" para esta operação</td>
+                                        <td>Sim</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>filtros</code></td>
+                                        <td>object</td>
+                                        <td>Objeto contendo os filtros a serem aplicados</td>
+                                        <td>Sim</td>
+                                    </tr>
+                                </table>
+
+                                <h3>Filtros disponíveis:</h3>
+                                <table>
+                                    <tr>
+                                        <th>Filtro</th>
+                                        <th>Tipo</th>
+                                        <th>Descrição</th>
+                                    </tr>
+                                    <tr>
+                                        <td><code>nome</code></td>
+                                        <td>string</td>
+                                        <td>Busca produtos que contenham o termo no nome (pesquisa parcial)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>preco_min</code></td>
+                                        <td>number</td>
+                                        <td>Preço base mínimo do produto</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>preco_max</code></td>
+                                        <td>number</td>
+                                        <td>Preço base máximo do produto</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>marca</code></td>
+                                        <td>string</td>
+                                        <td>Marca do produto (busca exata)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>categoria</code></td>
+                                        <td>integer</td>
+                                        <td>ID da categoria</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>tamanho</code></td>
+                                        <td>string</td>
+                                        <td>Tamanho da variação do produto (busca exata)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>cor</code></td>
+                                        <td>string</td>
+                                        <td>Cor da variação do produto (busca exata)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>material</code></td>
+                                        <td>string</td>
+                                        <td>Material da variação do produto (busca exata)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>variacao_preco_min</code></td>
+                                        <td>number</td>
+                                        <td>Preço mínimo das variações</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>variacao_preco_max</code></td>
+                                        <td>number</td>
+                                        <td>Preço máximo das variações</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>em_estoque</code></td>
+                                        <td>boolean</td>
+                                        <td>Se verdadeiro, filtra produtos disponíveis em estoque</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>ordenar_por</code></td>
+                                        <td>string</td>
+                                        <td>Campo para ordenação: 'preco', 'nome' ou 'data'</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>ordem</code></td>
+                                        <td>string</td>
+                                        <td>Direção da ordenação: 'ASC' ou 'DESC'</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>pagina</code></td>
+                                        <td>integer</td>
+                                        <td>Número da página para paginação (padrão: 1)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>limite</code></td>
+                                        <td>integer</td>
+                                        <td>Número de resultados por página (padrão: 20)</td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div class="example">
+                                // Exemplo 1: Busca simples por nome
+                                {
+                                "acao": "buscarProdutosPorFiltro",
+                                "filtros": {
+                                "nome": "Cole"
+                                }
+                                }
+
+                                // Exemplo 2: Busca combinada com múltiplos filtros
+                                {
+                                "acao": "buscarProdutosPorFiltro",
+                                "filtros": {
+                                "nome": "Camisa",
+                                "marca": "Marca Premium",
+                                "cor": "Azul",
+                                "tamanho": "M",
+                                "preco_min": 50.00,
+                                "preco_max": 150.00,
+                                "em_estoque": true,
+                                "ordenar_por": "preco",
+                                "ordem": "ASC",
+                                "pagina": 1,
+                                "limite": 10
+                                }
+                                }
+
+                                // Exemplo 3: Busca por categoria e material
+                                {
+                                "acao": "buscarProdutosPorFiltro",
+                                "filtros": {
+                                "categoria": 123,
+                                "material": "Algodão",
+                                "ordenar_por": "nome",
+                                "ordem": "ASC"
+                                }
+                                }
+
+                                // Resposta de sucesso
+                                {
+                                "status": "sucesso",
+                                "codigo": 200,
+                                "mensagem": "Produtos listados com sucesso",
+                                "dados": {
+                                "produtos": [
+                                {
+                                "id": 1,
+                                "nome": "Coleção Verão 2025",
+                                "marca": "Marca Premium",
+                                "preco_base": 99.90,
+                                "descricao": "Descrição do produto...",
+                                "edicao_limitada": 0,
+                                "numero_serie": null,
+                                "ativo": 1,
+                                "data_criacao": "2024-02-15 10:30:00",
+                                "categorias": ["1", "5"],
+                                "total_variacoes": 3,
+                                "estoque_total": 85,
+                                "variacoes": [
+                                {
+                                "id": 101,
+                                "sku": "COL-2025-P-AZ",
+                                "tamanho": "P",
+                                "cor": "Azul",
+                                "peso": "0.3",
+                                "material": "Algodão",
+                                "preco": 89.90,
+                                "quantidade_estoque": 25
+                                },
+                                {
+                                "id": 102,
+                                "sku": "COL-2025-M-AZ",
+                                "tamanho": "M",
+                                "cor": "Azul",
+                                "peso": "0.35",
+                                "material": "Algodão",
+                                "preco": 89.90,
+                                "quantidade_estoque": 30
+                                },
+                                {
+                                "id": 103,
+                                "sku": "COL-2025-G-AZ",
+                                "tamanho": "G",
+                                "cor": "Azul",
+                                "peso": "0.4",
+                                "material": "Algodão",
+                                "preco": 89.90,
+                                "quantidade_estoque": 30
+                                }
+                                ]
+                                },
+                                {
+                                "id": 2,
+                                "nome": "Coleira Premium para Pets",
+                                "marca": "PetMax",
+                                "preco_base": 79.90,
+                                "descricao": "Coleira resistente e confortável...",
+                                "edicao_limitada": 0,
+                                "numero_serie": null,
+                                "ativo": 1,
+                                "data_criacao": "2024-02-10 14:20:00",
+                                "categorias": ["3", "8"],
+                                "total_variacoes": 2,
+                                "estoque_total": 45,
+                                "variacoes": [
+                                {
+                                "id": 201,
+                                "sku": "COL-PET-P-VM",
+                                "tamanho": "P",
+                                "cor": "Vermelho",
+                                "peso": "0.1",
+                                "material": "Couro sintético",
+                                "preco": 69.90,
+                                "quantidade_estoque": 20
+                                },
+                                {
+                                "id": 202,
+                                "sku": "COL-PET-G-VM",
+                                "tamanho": "G",
+                                "cor": "Vermelho",
+                                "peso": "0.15",
+                                "material": "Couro sintético",
+                                "preco": 79.90,
+                                "quantidade_estoque": 25
+                                }
+                                ]
+                                }
+                                ],
+                                "total": 2,
+                                "pagina_atual": 1,
+                                "total_paginas": 1
+                                }
+                                }
+                            </div>
+
+
+
+                        </div>
+
+
+                        <div id="gerenciamento-categorias" class="endpoint">
+                            <h3>Gerenciamento de Categorias de Produtos</h3>
+
+                            <div class="item">
+                                <span class="method post">POST</span>
+                                <span class="url">/plugins/produtos/controllers/api_categoria_controller.php</span>
+                                <p class="description">Cria uma nova categoria de produto</p>
+
+                                <div class="parameters">
+                                    <strong>Parâmetros:</strong>
+                                    <ul>
+                                        <li><code>acao</code> (string, obrigatório): Valor deve ser "criarCategoria"
+                                        </li>
+                                        <li><code>nome</code> (string, obrigatório): Nome da categoria</li>
+                                        <li><code>descricao</code> (string, opcional): Descrição detalhada da categoria
+                                        </li>
+                                        <li><code>nivel</code> (integer, opcional): Nível hierárquico da categoria
+                                            (padrão:
+                                            1)</li>
+                                        <li><code>id_categoria_pai</code> (integer, opcional): ID da categoria pai para
+                                            subcategorias</li>
+                                    </ul>
+                                </div>
+
+                                <div class="example">
+                                    // Exemplo de requisição
+                                    {
+                                    "acao": "criarCategoria",
+                                    "nome": "Eletrônicos",
+                                    "descricao": "Produtos eletrônicos e tecnológicos",
+                                    "nivel": 1,
+                                    "id_categoria_pai": null
+                                    }
+
+                                    // Exemplo de subcategoria
+                                    {
+                                    "acao": "criarCategoria",
+                                    "nome": "Smartphones",
+                                    "descricao": "Telefones inteligentes",
+                                    "nivel": 2,
+                                    "id_categoria_pai": 123
+                                    }
+
+                                    // Resposta de sucesso
+                                    {
+                                    "status": "sucesso",
+                                    "codigo": 201,
+                                    "mensagem": "Categoria criada com sucesso",
+                                    "dados": {
+                                    "id": 4567
+                                    }
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <span class="method get">POST</span>
+                                <span class="url">/plugins/produtos/controllers/api_categoria_controller.php</span>
+                                <p class="description">Lista todas as categorias de produtos</p>
+
+                                <div class="parameters">
+                                    <strong>Parâmetros:</strong>
+                                    <ul>
+                                        <li><code>acao</code> (string, obrigatório): Valor deve ser "listarCategorias"
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="example">
+                                    // Exemplo de requisição
+                                    {
+                                    "acao": "listarCategorias"
+                                    }
+
+                                    // Resposta de sucesso
+                                    {
+                                    "status": "sucesso",
+                                    "codigo": 200,
+                                    "mensagem": "Categorias listadas com sucesso",
+                                    "dados": [
+                                    {
+                                    "id": 4567,
+                                    "nome": "Eletrônicos",
+                                    "descricao": "Produtos eletrônicos e tecnológicos",
+                                    "id_categoria_pai": null,
+                                    "nivel": 1,
+                                    "nome_categoria_pai": null
+                                    },
+                                    {
+                                    "id": 4568,
+                                    "nome": "Smartphones",
+                                    "descricao": "Telefones inteligentes",
+                                    "id_categoria_pai": 4567,
+                                    "nivel": 2,
+                                    "nome_categoria_pai": "Eletrônicos"
+                                    }
+                                    ]
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <span class="method put">POST</span>
+                                <span class="url">/plugins/produtos/controllers/api_categoria_controller.php</span>
+                                <p class="description">Atualiza informações de uma categoria existente</p>
+
+                                <div class="parameters">
+                                    <strong>Parâmetros:</strong>
+                                    <ul>
+                                        <li><code>acao</code> (string, obrigatório): Valor deve ser "atualizarCategoria"
+                                        </li>
+                                        <li><code>id</code> (integer, obrigatório): ID da categoria</li>
+                                        <li><code>nome</code> (string, opcional): Novo nome da categoria</li>
+                                        <li><code>descricao</code> (string, opcional): Nova descrição</li>
+                                        <li><code>id_categoria_pai</code> (integer, opcional): Alterar categoria pai
+                                        </li>
+                                        <li><code>nivel</code> (integer, opcional): Alterar nível hierárquico</li>
+                                    </ul>
+                                </div>
+
+                                <div class="example">
+                                    // Exemplo de requisição
+                                    {
+                                    "acao": "atualizarCategoria",
+                                    "id": 4567,
+                                    "nome": "Tecnologia e Eletrônicos",
+                                    "descricao": "Produtos tecnológicos avançados",
+                                    "nivel": 1
+                                    }
+
+                                    // Resposta de sucesso
+                                    {
+                                    "status": "sucesso",
+                                    "codigo": 200,
+                                    "mensagem": "Categoria atualizada com sucesso",
+                                    "dados": {
+                                    "id": 4567
+                                    }
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <span class="method delete">POST</span>
+                                <span class="url">/plugins/produtos/controllers/api_categoria_controller.php</span>
+                                <p class="description">Deleta uma categoria de produto</p>
+
+                                <div class="parameters">
+                                    <strong>Parâmetros:</strong>
+                                    <ul>
+                                        <li><code>acao</code> (string, obrigatório): Valor deve ser "deletarCategoria"
+                                        </li>
+                                        <li><code>id</code> (integer, obrigatório): ID da categoria a ser deletada</li>
+                                    </ul>
+                                </div>
+
+                                <div class="example">
+                                    // Exemplo de requisição
+                                    {
+                                    "acao": "deletarCategoria",
+                                    "id": 4567
+                                    }
+
+                                    // Resposta de sucesso
+                                    {
+                                    "status": "sucesso",
+                                    "codigo": 200,
+                                    "mensagem": "Categoria removida com sucesso",
+                                    "dados": {
+                                    "id": 4567
+                                    }
+                                    }
+
+                                    // Resposta de erro (caso existam produtos vinculados)
+                                    {
+                                    "status": "erro",
+                                    "codigo": 409,
+                                    "mensagem": "Não é possível excluir esta categoria pois existem produtos vinculados"
+                                    }
+
+                                    // Resposta de erro (caso existam subcategorias)
+                                    {
+                                    "status": "erro",
+                                    "codigo": 409,
+                                    "mensagem": "Não é possível excluir esta categoria pois existem subcategorias
+                                    vinculadas"
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <span class="method post">POST</span>
+                                <span class="url">/plugins/produtos/controllers/api_categoria_controller.php</span>
+                                <p class="description">Associa um produto a uma categoria</p>
+
+                                <div class="parameters">
+                                    <strong>Parâmetros:</strong>
+                                    <ul>
+                                        <li><code>acao</code> (string, obrigatório): Valor deve ser
+                                            "associarProdutoCategoria"</li>
+                                        <li><code>id_produto</code> (integer, obrigatório): ID do produto</li>
+                                        <li><code>id_categoria</code> (integer, obrigatório): ID da categoria</li>
+                                    </ul>
+                                </div>
+
+                                <div class="example">
+                                    // Exemplo de requisição
+                                    {
+                                    "acao": "associarProdutoCategoria",
+                                    "id_produto": 9012,
+                                    "id_categoria": 4567
+                                    }
+
+                                    // Resposta de sucesso
+                                    {
+                                    "status": "sucesso",
+                                    "codigo": 201,
+                                    "mensagem": "Produto associado à categoria com sucesso",
+                                    "dados": {
+                                    "id_produto": 9012,
+                                    "id_categoria": 4567
+                                    }
+                                    }
+
+                                    // Resposta de erro (produto já associado)
+                                    {
+                                    "status": "erro",
+                                    "codigo": 409,
+                                    "mensagem": "Produto já está associado a esta categoria"
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <span class="method delete">POST</span>
+                                <span class="url">/plugins/produtos/controllers/api_categoria_controller.php</span>
+                                <p class="description">Remove a associação de um produto com uma categoria</p>
+
+                                <div class="parameters">
+                                    <strong>Parâmetros:</strong>
+                                    <ul>
+                                        <li><code>acao</code> (string, obrigatório): Valor deve ser
+                                            "desassociarProdutoCategoria"</li>
+                                        <li><code>id_produto</code> (integer, obrigatório): ID do produto</li>
+                                        <li><code>id_categoria</code> (integer, obrigatório): ID da categoria</li>
+                                    </ul>
+                                </div>
+
+                                <div class="example">
+                                    // Exemplo de requisição
+                                    {
+                                    "acao": "desassociarProdutoCategoria",
+                                    "id_produto": 9012,
+                                    "id_categoria": 4567
+                                    }
+
+                                    // Resposta de sucesso
+                                    {
+                                    "status": "sucesso",
+                                    "codigo": 200,
+                                    "mensagem": "Produto desassociado da categoria com sucesso",
+                                    "dados": {
+                                    "id_produto": 9012,
+                                    "id_categoria": 4567
+                                    }
+                                    }
+
+                                    // Resposta de erro (associação não encontrada)
+                                    {
+                                    "status": "erro",
+                                    "codigo": 404,
+                                    "mensagem": "Associação produto-categoria não encontrada"
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <span class="method get">POST</span>
+                                <span class="url">/plugins/produtos/controllers/api_categoria_controller.php</span>
+                                <p class="description">Lista todas as categorias associadas a um produto específico</p>
+
+                                <div class="parameters">
+                                    <strong>Parâmetros:</strong>
+                                    <ul>
+                                        <li><code>acao</code> (string, obrigatório): Valor deve ser
+                                            "listarCategoriasProduto"</li>
+                                        <li><code>id_produto</code> (integer, obrigatório): ID do produto</li>
+                                    </ul>
+                                </div>
+
+                                <div class="example">
+                                    // Exemplo de requisição
+                                    {
+                                    "acao": "listarCategoriasProduto",
+                                    "id_produto": 9012
+                                    }
+
+                                    // Resposta de sucesso
+                                    {
+                                    "status": "sucesso",
+                                    "codigo": 200,
+                                    "mensagem": "Categorias do produto listadas com sucesso",
+                                    "dados": [
+                                    {
+                                    "id": 4567,
+                                    "nome": "Eletrônicos",
+                                    "descricao": "Produtos eletrônicos e tecnológicos",
+                                    "nivel": 1,
+                                    "id_categoria_pai": null,
+                                    "nome_categoria_pai": null
+                                    },
+                                    {
+                                    "id": 4568,
+                                    "nome": "Smartphones",
+                                    "descricao": "Telefones inteligentes",
+                                    "nivel": 2,
+                                    "id_categoria_pai": 4567,
+                                    "nome_categoria_pai": "Eletrônicos"
+                                    }
+                                    ]
+                                    }
+
+                                    // Resposta de erro (produto não encontrado)
+                                    {
+                                    "status": "erro",
+                                    "codigo": 404,
+                                    "mensagem": "Produto não encontrado"
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Session Management Section -->
+                        <div id="gerenciamento-sessoes" class="endpoint">
+                            <h3>4. Gerenciamento de Sessões</h3>
+
+                            <div class="item">
+                                <span class="method">POST</span>
+                                <span class="url">/criarSessao</span>
+                                <p class="description">Cria uma nova sessão para um usuário</p>
+
+                                <div class="parameters">
+                                    <strong>Parâmetros:</strong>
+                                    <ul>
+                                        <li><code>usuario_id</code> (integer, obrigatório): ID do usuário</li>
+                                        <li><code>dispositivo</code> (string, opcional): Informações do dispositivo</li>
+                                        <li><code>ip</code> (string, opcional): Endereço IP da sessão</li>
+                                    </ul>
+                                </div>
+
+                                <div class="example">
+                                    // Exemplo de requisição
+                                    {
+                                    "usuario_id": 9876,
+                                    "dispositivo": "Desktop Chrome",
+                                    "ip": "192.168.1.100"
+                                    }
+
+                                    // Resposta de sucesso
+                                    {
+                                    "status": "sucesso",
+                                    "mensagem": "Sessão criada com sucesso",
+                                    "token_acesso": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+                                    "token_refresh": "R2VmcmVzaFRva2VuRXhlbXBsbw==",
+                                    "expiracao": "2025-02-11T20:30:00Z"
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <span class="method">POST</span>
+                                <span class="url">/validarSessao</span>
+                                <p class="description">Valida a integridade e validade de um token de sessão</p>
+
+                                <div class="parameters">
+                                    <strong>Parâmetros:</strong>
+                                    <ul>
+                                        <li><code>token</code> (string, obrigatório): Token de acesso a ser validado
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="example">
+                                    // Exemplo de requisição
+                                    {
+                                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                                    }
+
+                                    // Resposta de sucesso
+                                    {
+                                    "status": "sucesso",
+                                    "mensagem": "Token válido",
+                                    "usuario": {
+                                    "id": 9876,
+                                    "nome": "Maria Silva",
+                                    "email": "maria.silva@exemplo.com"
+                                    },
+                                    "tempo_restante": 1800
+                                    }
+
+                                    // Resposta de token inválido
+                                    {
+                                    "status": "erro",
+                                    "mensagem": "Token inválido ou expirado"
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <span class="method">POST</span>
+                                <span class="url">/renovarSessao</span>
+                                <p class="description">Renova o token de acesso usando o token de refresh</p>
+
+                                <div class="parameters">
+                                    <strong>Parâmetros:</strong>
+                                    <ul>
+                                        <li><code>refresh_token</code> (string, obrigatório): Token de refresh</li>
+                                    </ul>
+                                </div>
+
+                                <div class="example">
+                                    // Exemplo de requisição
+                                    {
+                                    "refresh_token": "R2VmcmVzaFRva2VuRXhlbXBsbw=="
+                                    }
+
+                                    // Resposta de sucesso
+                                    {
+                                    "status": "sucesso",
+                                    "mensagem": "Token renovado com sucesso",
+                                    "novo_token_acesso": "NovoTokenGeradoAutomaticamente...",
+                                    "nova_expiracao": "2025-02-11T21:00:00Z"
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <span class="method">POST</span>
+                                <span class="url">/revogarSessao</span>
+                                <p class="description">Revoga (encerra) uma sessão específica</p>
+
+                                <div class="parameters">
+                                    <strong>Parâmetros:</strong>
+                                    <ul>
+                                        <li><code>token</code> (string, obrigatório): Token de acesso a ser revogado
+                                        </li>
+                                        <li><code>motivo</code> (string, opcional): Motivo da revogação</li>
+                                    </ul>
+                                </div>
+
+                                <div class="example">
+                                    // Exemplo de requisição
+                                    {
+                                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+                                    "motivo": "Logout do usuário"
+                                    }
+
+                                    // Resposta de sucesso
+                                    {
+                                    "status": "sucesso",
+                                    "mensagem": "Sessão revogada com sucesso",
+                                    "data_revogacao": "2025-02-11T19:45:00Z"
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <span class="method">GET</span>
+                                <span class="url">/listarSessoesAtivas</span>
+                                <p class="description">Lista todas as sessões ativas de um usuário</p>
+
+                                <div class="parameters">
+                                    <strong>Parâmetros de Consulta:</strong>
+                                    <ul>
+                                        <li><code>usuario_id</code> (integer, obrigatório): ID do usuário</li>
+                                        <li><code>limite</code> (integer, opcional): Número máximo de sessões (padrão:
+                                            10)
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="example">
+                                    // Exemplo de requisição
+                                    GET /sessao/listar?usuario_id=9876&limite=5
+
+                                    // Resposta de sucesso
+                                    {
+                                    "status": "sucesso",
+                                    "total_sessoes": 3,
+                                    "sessoes": [
+                                    {
+                                    "id": "sessao_123",
+                                    "dispositivo": "Desktop Chrome",
+                                    "ip": "192.168.1.100",
+                                    "data_inicio": "2025-02-11T19:30:00Z",
+                                    "ultimo_acesso": "2025-02-11T19:40:00Z"
+                                    },
+                                    {
+                                    "id": "sessao_124",
+                                    "dispositivo": "Mobile Android",
+                                    "ip": "10.0.0.50",
+                                    "data_inicio": "2025-02-11T19:35:00Z",
+                                    "ultimo_acesso": "2025-02-11T19:38:00Z"
+                                    }
+                                    ]
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <span class="method">GET</span>
+                                <span class="url">/buscarHistoricoSessao</span>
+                                <p class="description">Recupera o histórico de uma sessão específica</p>
+
+                                <div class="parameters">
+                                    <strong>Parâmetros de Consulta:</strong>
+                                    <ul>
+                                        <li><code>sessao_id</code> (string, obrigatório): ID da sessão</li>
+                                        <li><code>limite</code> (integer, opcional): Número máximo de registros (padrão:
+                                            10)
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="example">
+                                    // Exemplo de requisição
+                                    GET /sessao/historico?sessao_id=sessao_123&limite=5
+
+                                    // Resposta de sucesso
+                                    {
+                                    "status": "sucesso",
+                                    "historico": [
+                                    {
+                                    "timestamp": "2025-02-11T19:30:00Z",
+                                    "acao": "Login",
+                                    "detalhes": "Usuário autenticado"
+                                    },
+                                    {
+                                    "timestamp": "2025-02-11T19:35:00Z",
+                                    "acao": "Acesso a Produtos",
+                                    "detalhes": "Listagem de produtos"
+                                    }
+                                    ]
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <span class="method">POST</span>
+                                <span class="url">/revogarTodasSessoes</span>
+                                <p class="description">Remove sessões expiradas do sistema</p>
+
+                                <div class="example">
+                                    // Exemplo de requisição
+                                    POST /sessao/limpar_expiradas
+
+                                    // Resposta de sucesso
+                                    {
+                                    "status": "sucesso",
+                                    "mensagem": "Sessões expiradas removidas",
+                                    "total_sessoes_removidas": 15
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <span class="method">POST</span>
+                                <span class="url">/limparSessoesExpiradas</span>
+                                <p class="description">Revoga todas as sessões de um usuário específico</p>
+
+                                <div class="parameters">
+                                    <strong>Parâmetros:</strong>
+                                    <ul>
+                                        <li><code>usuario_id</code> (integer, obrigatório): ID do usuário</li>
+                                        <li><code>motivo</code> (string, opcional): Motivo da revogação</li>
+                                    </ul>
+                                </div>
+
+                                <div class="example">
+                                    // Exemplo de requisição
+                                    {
+                                    "usuario_id": 9876,
+                                    "motivo": "Suspeita de acesso não autorizado"
+                                    }
+
+                                    // Resposta de sucesso
+                                    {
+                                    "status": "sucesso",
+                                    "mensagem": "Todas as sessões do usuário foram revogadas",
+                                    "total_sessoes_revogadas": 3,
+                                    "data_revogacao": "2025-02-11T19:50:00Z"
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- User Types Management Section -->
+                        <div id="gerenciamento-tipos-usuario" class="endpoint">
+                            <h3>5. Gerenciamento de Tipos de Usuário</h3>
+
+                            <div class="item">
+                                <span class="method">POST</span>
+                                <span class="url">/tipo_usuario/criar</span>
+                                <p class="description">Cria um novo tipo de usuário no sistema</p>
+
+                                <div class="parameters">
+                                    <strong>Parâmetros:</strong>
+                                    <ul>
+                                        <li><code>nome</code> (string, obrigatório): Nome do tipo de usuário</li>
+                                        <li><code>descricao</code> (string, opcional): Descrição detalhada do tipo de
+                                            usuário</li>
+                                        <li><code>permissoes</code> (array, opcional): Lista de permissões associadas
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="example">
+                                    // Exemplo de requisição - Tipo de usuário básico
+                                    {
+                                    "nome": "cliente_padrao",
+                                    "descricao": "Usuário cliente com permissões básicas",
+                                    "permissoes": [
+                                    "visualizar_produtos",
+                                    "adicionar_carrinho",
+                                    "fazer_pedido"
+                                    ]
+                                    }
+
+                                    // Exemplo de requisição - Tipo de usuário administrador
+                                    {
+                                    "nome": "administrador_master",
+                                    "descricao": "Usuário com acesso total ao sistema",
+                                    "permissoes": [
+                                    "gerenciar_usuarios",
+                                    "gerenciar_produtos",
+                                    "gerenciar_pedidos",
+                                    "configurar_sistema"
+                                    ]
+                                    }
+
+                                    // Resposta de sucesso
+                                    {
+                                    "status": "sucesso",
+                                    "mensagem": "Tipo de usuário criado com sucesso",
+                                    "id_tipo_usuario": 5678
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <span class="method">GET</span>
+                                <span class="url">/tipo_usuario/listar</span>
+                                <p class="description">Lista todos os tipos de usuário no sistema</p>
+
+                                <div class="parameters">
+                                    <strong>Parâmetros de Consulta:</strong>
+                                    <ul>
+                                        <li><code>pagina</code> (integer, opcional): Número da página (padrão: 1)</li>
+                                        <li><code>limite</code> (integer, opcional): Número de resultados por página
+                                            (padrão: 10)</li>
+                                    </ul>
+                                </div>
+
+                                <div class="example">
+                                    // Exemplo de requisição
+                                    GET /tipo_usuario/listar?pagina=1&limite=5
+
+                                    // Resposta de sucesso
+                                    {
+                                    "status": "sucesso",
+                                    "total_tipos": 4,
+                                    "tipos_usuario": [
+                                    {
+                                    "id": 5678,
+                                    "nome": "cliente_padrao",
+                                    "descricao": "Usuário cliente com permissões básicas",
+                                    "permissoes": [
+                                    "visualizar_produtos",
+                                    "adicionar_carrinho",
+                                    "fazer_pedido"
+                                    ]
+                                    },
+                                    {
+                                    "id": 5679,
+                                    "nome": "administrador_master",
+                                    "descricao": "Usuário com acesso total ao sistema",
+                                    "permissoes": [
+                                    "gerenciar_usuarios",
+                                    "gerenciar_produtos",
+                                    "gerenciar_pedidos",
+                                    "configurar_sistema"
+                                    ]
+                                    }
+                                    ]
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <span class="method">GET</span>
+                                <span class="url">/tipo_usuario/buscar</span>
+                                <p class="description">Busca detalhes de um tipo de usuário específico</p>
+
+                                <div class="parameters">
+                                    <strong>Parâmetros:</strong>
+                                    <ul>
+                                        <li><code>id</code> (integer, opcional): ID do tipo de usuário</li>
+                                        <li><code>nome</code> (string, opcional): Nome do tipo de usuário</li>
+                                    </ul>
+                                </div>
+
+                                <div class="example">
+                                    // Exemplo de requisição por ID
+                                    GET /tipo_usuario/buscar?id=5678
+
+                                    // Exemplo de requisição por nome
+                                    GET /tipo_usuario/buscar?nome=cliente_padrao
+
+                                    // Resposta de sucesso
+                                    {
+                                    "status": "sucesso",
+                                    "tipo_usuario": {
+                                    "id": 5678,
+                                    "nome": "cliente_padrao",
+                                    "descricao": "Usuário cliente com permissões básicas",
+                                    "permissoes": [
+                                    "visualizar_produtos",
+                                    "adicionar_carrinho",
+                                    "fazer_pedido"
+                                    ],
+                                    "data_criacao": "2025-02-11T19:55:00Z",
+                                    "total_usuarios": 250
+                                    }
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <span class="method">PUT</span>
+                                <span class="url">/tipo_usuario/atualizar</span>
+                                <p class="description">Atualiza informações de um tipo de usuário existente</p>
+
+                                <div class="parameters">
+                                    <strong>Parâmetros:</strong>
+                                    <ul>
+                                        <li><code>id</code> (integer, obrigatório): ID do tipo de usuário</li>
+                                        <li><code>nome</code> (string, opcional): Novo nome do tipo de usuário</li>
+                                        <li><code>descricao</code> (string, opcional): Nova descrição</li>
+                                        <li><code>permissoes</code> (array, opcional): Atualizar lista de permissões
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="example">
+                                    // Exemplo de requisição
+                                    {
+                                    "id": 5678,
+                                    "nome": "cliente_premium",
+                                    "descricao": "Usuário cliente com permissões expandidas",
+                                    "permissoes": [
+                                    "visualizar_produtos",
+                                    "adicionar_carrinho",
+                                    "fazer_pedido",
+                                    "acesso_suporte_vip"
+                                    ]
+                                    }
+
+                                    // Resposta de sucesso
+                                    {
+                                    "status": "sucesso",
+                                    "mensagem": "Tipo de usuário atualizado com sucesso",
+                                    "tipo_usuario_atualizado": {
+                                    "nome": "cliente_premium",
+                                    "descricao": "Usuário cliente com permissões expandidas"
+                                    }
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <span class="method">DELETE</span>
+                                <span class="url">/tipo_usuario/deletar</span>
+                                <p class="description">Deleta um tipo de usuário do sistema</p>
+
+                                <div class="parameters">
+                                    <strong>Parâmetros:</strong>
+                                    <ul>
+                                        <li><code>id</code> (integer, obrigatório): ID do tipo de usuário a ser deletado
+                                        </li>
+                                        <li><code>motivo</code> (string, opcional): Motivo da deleção</li>
+                                        <li><code>transferir_usuarios</code> (integer, opcional): ID do tipo de usuário
+                                            para
+                                            transferência</li>
+                                    </ul>
+                                </div>
+
+                                <div class="example">
+                                    // Exemplo de requisição com transferência
+                                    {
+                                    "id": 5678,
+                                    "motivo": "Reestruturação de equipes",
+                                    "transferir_usuarios": 5679
+                                    }
+
+                                    // Resposta de sucesso com transferência
+                                    {
+                                    "status": "sucesso",
+                                    "mensagem": "Tipo de usuário deletado com sucesso",
+                                    "usuarios_transferidos": 250,
+                                    "data_delecao": "2025-02-11T20:00:00Z"
+                                    }
+
+                                    // Exemplo de requisição sem transferência
+                                    {
+                                    "id": 5678,
+                                    "motivo": "Tipo de usuário obsoleto"
+                                    }
+
+                                    // Resposta sem transferência
+                                    {
+                                    "status": "sucesso",
+                                    "mensagem": "Tipo de usuário deletado com sucesso",
+                                    "usuarios_afetados": 0,
+                                    "data_delecao": "2025-02-11T20:05:00Z"
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <span class="method">POST</span>
+                                <span class="url">/tipo_usuario/adicionar_permissao</span>
+                                <p class="description">Adiciona uma nova permissão a um tipo de usuário</p>
+
+                                <div class="parameters">
+                                    <strong>Parâmetros:</strong>
+                                    <ul>
+                                        <li><code>tipo_usuario_id</code> (integer, obrigatório): ID do tipo de usuário
+                                        </li>
+                                        <li><code>permissao</code> (string, obrigatório): Nome da nova permissão</li>
+                                    </ul>
+                                </div>
+
+                                <div class="example">
+                                    // Exemplo de requisição
+                                    {
+                                    "tipo_usuario_id": 5678,
+                                    "permissao": "acesso_relatorios"
+                                    }
+
+                                    // Resposta de sucesso
+                                    {
+                                    "status": "sucesso",
+                                    "mensagem": "Permissão adicionada com sucesso",
+                                    "permissoes_atualizadas": [
+                                    "visualizar_produtos",
+                                    "adicionar_carrinho",
+                                    "fazer_pedido",
+                                    "acesso_relatorios"
+                                    ]
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <span class="method">DELETE</span>
+                                <span class="url">/tipo_usuario/remover_permissao</span>
+                                <p class="description">Remove uma permissão específica de um tipo de usuário</p>
+
+                                <div class="parameters">
+                                    <strong>Parâmetros:</strong>
+                                    <ul>
+                                        <li><code>tipo_usuario_id</code> (integer, obrigatório): ID do tipo de usuário
+                                        </li>
+                                        <li><code>permissao</code> (string, obrigatório): Nome da permissão a ser
+                                            removida
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="example">
+                                    // Exemplo de requisição
+                                    {
+                                    "tipo_usuario_id": 5678,
+                                    "permissao": "acesso_relatorios"
+                                    }
+
+                                    // Resposta de sucesso
+                                    {
+                                    "status": "sucesso",
+                                    "mensagem": "Permissão removida com sucesso",
+                                    "permissoes_atualizadas": [
+                                    "visualizar_produtos",
+                                    "adicionar_carrinho",
+                                    "fazer_pedido"
+                                    ]
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- User Groups Management Section -->
+                        <div id="gerenciamento-grupos-usuario" class="endpoint">
+                            <h3>6. Gerenciamento de Grupos de Usuário</h3>
+
+                            <div class="item">
+                                <span class="method">POST</span>
+                                <span class="url">/usuario_grupo/criar</span>
+                                <p class="description">Cria um novo grupo de usuários</p>
+
+                                <div class="parameters">
+                                    <strong>Parâmetros:</strong>
+                                    <ul>
+                                        <li><code>nome</code> (string, obrigatório): Nome do grupo</li>
+                                        <li><code>descricao</code> (string, opcional): Descrição detalhada do grupo</li>
+                                        <li><code>permissoes</code> (array, opcional): Permissões específicas do grupo
+                                        </li>
+                                        <li><code>tipo_usuario_id</code> (integer, opcional): Tipo de usuário padrão
+                                            para o
+                                            grupo</li>
+                                    </ul>
+                                </div>
+
+                                <div class="example">
+                                    // Exemplo de requisição - Grupo de Marketing
+                                    {
+                                    "nome": "equipe_marketing",
+                                    "descricao": "Grupo para profissionais de marketing",
+                                    "permissoes": [
+                                    "criar_campanha",
+                                    "visualizar_relatorios_marketing",
+                                    "gerenciar_conteudo"
+                                    ],
+                                    "tipo_usuario_id": 5679
+                                    }
+
+                                    // Resposta de sucesso
+                                    {
+                                    "status": "sucesso",
+                                    "mensagem": "Grupo de usuário criado com sucesso",
+                                    "id_grupo": 7890
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <span class="method">GET</span>
+                                <span class="url">/usuario_grupo/listar</span>
+                                <p class="description">Lista todos os grupos de usuários</p>
+
+                                <div class="parameters">
+                                    <strong>Parâmetros de Consulta:</strong>
+                                    <ul>
+                                        <li><code>pagina</code> (integer, opcional): Número da página (padrão: 1)</li>
+                                        <li><code>limite</code> (integer, opcional): Número de resultados por página
+                                            (padrão: 10)</li>
+                                    </ul>
+                                </div>
+
+                                <div class="example">
+                                    // Exemplo de requisição
+                                    GET /usuario_grupo/listar?pagina=1&limite=5
+
+                                    // Resposta de sucesso
+                                    {
+                                    "status": "sucesso",
+                                    "total_grupos": 3,
+                                    "grupos": [
+                                    {
+                                    "id": 7890,
+                                    "nome": "equipe_marketing",
+                                    "descricao": "Grupo para profissionais de marketing",
+                                    "total_membros": 12,
+                                    "tipo_usuario_padrao": "administrador_marketing"
+                                    },
+                                    {
+                                    "id": 7891,
+                                    "nome": "suporte_tecnico",
+                                    "descricao": "Grupo de suporte técnico",
+                                    "total_membros": 8,
+                                    "tipo_usuario_padrao": "suporte_nivel_2"
+                                    }
+                                    ]
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <span class="method">GET</span>
+                                <span class="url">/usuario_grupo/buscar</span>
+                                <p class="description">Busca detalhes de um grupo de usuários específico</p>
+
+                                <div class="parameters">
+                                    <strong>Parâmetros:</strong>
+                                    <ul>
+                                        <li><code>id</code> (integer, opcional): ID do grupo</li>
+                                        <li><code>nome</code> (string, opcional): Nome do grupo</li>
+                                    </ul>
+                                </div>
+
+                                <div class="example">
+                                    // Exemplo de requisição por ID
+                                    GET /usuario_grupo/buscar?id=7890
+
+                                    // Exemplo de requisição por nome
+                                    GET /usuario_grupo/buscar?nome=equipe_marketing
+
+                                    // Resposta de sucesso
+                                    {
+                                    "status": "sucesso",
+                                    "grupo": {
+                                    "id": 7890,
+                                    "nome": "equipe_marketing",
+                                    "descricao": "Grupo para profissionais de marketing",
+                                    "permissoes": [
+                                    "criar_campanha",
+                                    "visualizar_relatorios_marketing",
+                                    "gerenciar_conteudo"
+                                    ],
+                                    "tipo_usuario_padrao": {
+                                    "id": 5679,
+                                    "nome": "administrador_marketing"
+                                    },
+                                    "membros": [
+                                    {
+                                    "id": 9876,
+                                    "nome": "Ana Silva",
+                                    "email": "ana.silva@empresa.com"
+                                    },
+                                    {
+                                    "id": 9877,
+                                    "nome": "Carlos Oliveira",
+                                    "email": "carlos.oliveira@empresa.com"
+                                    }
+                                    ],
+                                    "data_criacao": "2025-02-11T20:10:00Z"
+                                    }
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <span class="method">PUT</span>
+                                <span class="url">/usuario_grupo/atualizar</span>
+                                <p class="description">Atualiza informações de um grupo de usuários</p>
+
+                                <div class="parameters">
+                                    <strong>Parâmetros:</strong>
+                                    <ul>
+                                        <li><code>id</code> (integer, obrigatório): ID do grupo</li>
+                                        <li><code>nome</code> (string, opcional): Novo nome do grupo</li>
+                                        <li><code>descricao</code> (string, opcional): Nova descrição</li>
+                                        <li><code>permissoes</code> (array, opcional): Atualizar permissões do grupo
+                                        </li>
+                                        <li><code>tipo_usuario_id</code> (integer, opcional): Atualizar tipo de usuário
+                                            padrão</li>
+                                    </ul>
+                                </div>
+
+                                <div class="example">
+                                    // Exemplo de requisição
+                                    {
+                                    "id": 7890,
+                                    "nome": "equipe_marketing_digital",
+                                    "descricao": "Grupo especializado em marketing digital",
+                                    "permissoes": [
+                                    "criar_campanha",
+                                    "visualizar_relatorios_marketing",
+                                    "gerenciar_conteudo",
+                                    "analise_midias_sociais"
+                                    ]
+                                    }
+
+                                    // Resposta de sucesso
+                                    {
+                                    "status": "sucesso",
+                                    "mensagem": "Grupo atualizado com sucesso",
+                                    "grupo_atualizado": {
+                                    "nome": "equipe_marketing_digital",
+                                    "descricao": "Grupo especializado em marketing digital"
+                                    }
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <span class="method">DELETE</span>
+                                <span class="url">/usuario_grupo/deletar</span>
+                                <p class="description">Deleta um grupo de usuários</p>
+
+                                <div class="parameters">
+                                    <strong>Parâmetros:</strong>
+                                    <ul>
+                                        <li><code>id</code> (integer, obrigatório): ID do grupo a ser deletado</li>
+                                        <li><code>motivo</code> (string, opcional): Motivo da deleção</li>
+                                        <li><code>transferir_membros</code> (integer, opcional): ID do grupo para
+                                            transferência</li>
+                                    </ul>
+                                </div>
+
+                                <div class="example">
+                                    // Exemplo de requisição com transferência
+                                    {
+                                    "id": 7890,
+                                    "motivo": "Reestruturação de equipes",
+                                    "transferir_membros": 7891
+                                    }
+
+                                    // Resposta de sucesso com transferência
+                                    {
+                                    "status": "sucesso",
+                                    "mensagem": "Grupo deletado com sucesso",
+                                    "membros_transferidos": 12,
+                                    "data_delecao": "2025-02-11T20:15:00Z"
+                                    }
+
+                                    // Exemplo de requisição sem transferência
+                                    {
+                                    "id": 7890,
+                                    "motivo": "Grupo não mais necessário"
+                                    }
+
+                                    // Resposta sem transferência
+                                    {
+                                    "status": "sucesso",
+                                    "mensagem": "Grupo deletado com sucesso",
+                                    "membros_afetados": 0,
+                                    "data_delecao": "2025-02-11T20:20:00Z"
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <span class="method">POST</span>
+                                <span class="url">/usuario_grupo/adicionar_membro</span>
+                                <p class="description">Adiciona um usuário a um grupo</p>
+
+                                <div class="parameters">
+                                    <strong>Parâmetros:</strong>
+                                    <ul>
+                                        <li><code>grupo_id</code> (integer, obrigatório): ID do grupo</li>
+                                        <li><code>usuario_id</code> (integer, obrigatório): ID do usuário</li>
+                                        <li><code>papel</code> (string, opcional): Papel específico dentro do grupo</li>
+                                    </ul>
+                                </div>
+
+                                <div class="example">
+                                    // Exemplo de requisição
+                                    {
+                                    "grupo_id": 7890,
+                                    "usuario_id": 9876,
+                                    "papel": "lider_marketing"
+                                    }
+
+                                    // Resposta de sucesso
+                                    {
+                                    "status": "sucesso",
+                                    "mensagem": "Usuário adicionado ao grupo com sucesso",
+                                    "membro_adicionado": {
+                                    "id": 9876,
+                                    "nome": "Ana Silva",
+                                    "papel": "lider_marketing"
+                                    }
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <span class="method">DELETE</span>
+                                <span class="url">/usuario_grupo/remover_membro</span>
+                                <p class="description">Remove um usuário de um grupo</p>
+
+                                <div class="parameters">
+                                    <strong>Parâmetros:</strong>
+                                    <ul>
+                                        <li><code>grupo_id</code> (integer, obrigatório): ID do grupo</li>
+                                        <li><code>usuario_id</code> (integer, obrigatório): ID do usuário</li>
+                                        <li><code>motivo</code> (string, opcional): Motivo da remoção</li>
+                                    </ul>
+                                </div>
+
+                                <div class="example">
+                                    // Exemplo de requisição
+                                    {
+                                    "grupo_id": 7890,
+                                    "usuario_id": 9876,
+                                    "motivo": "Mudança de departamento"
+                                    }
+
+                                    // Resposta de sucesso
+                                    {
+                                    "status": "sucesso",
+                                    "mensagem": "Usuário removido do grupo com sucesso",
+                                    "membro_removido": {
+                                    "id": 9876,
+                                    "nome": "Ana Silva"
+                                    }
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <span class="method">GET</span>
+                                <span class="url">/usuario_grupo/listar_membros</span>
+                                <p class="description">Lista todos os membros de um grupo</p>
+
+                                <div class="parameters">
+                                    <strong>Parâmetros de Consulta:</strong>
+                                    <ul>
+                                        <li><code>grupo_id</code> (integer, obrigatório): ID do grupo</li>
+                                        <li><code>pagina</code> (integer, opcional): Número da página (padrão: 1)</li>
+                                        <li><code>limite</code> (integer, opcional): Número de resultados por página
+                                            (padrão: 10)</li>
+                                    </ul>
+                                </div>
+
+                                <div class="example">
+                                    // Exemplo de requisição
+                                    GET /usuario_grupo/listar_membros?grupo_id=7890&pagina=1&limite=5
+
+                                    // Resposta de sucesso
+                                    {
+                                    "status": "sucesso",
+                                    "total_membros": 12,
+                                    "membros": [
+                                    {
+                                    "id": 9876,
+                                    "nome": "Ana Silva",
+                                    "email": "ana.silva@empresa.com",
+                                    "papel": "lider_marketing"
+                                    },
+                                    {
+                                    "id": 9877,
+                                    "nome": "Carlos Oliveira",
+                                    "email": "carlos.oliveira@empresa.com",
+                                    "papel": "analista_marketing"
+                                    }
+                                    ]
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="note">
+                            <strong>Importante:</strong> Todos os endpoints, exceto registro e login inicial, requerem
+                            autenticação via
+                            token no cabeçalho Authorization.
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h2> Códigos de Erro Comuns</h2>
+                        <ul>
+                            <li><strong>400</strong> - Requisição inválida (parâmetros incorretos)</li>
+                            <li><strong>401</strong> - Não autorizado (token inválido ou expirado)</li>
+                            <li><strong>403</strong> - Acesso proibido (sem permissão)</li>
+                            <li><strong>404</strong> - Recurso não encontrado</li>
+                            <li><strong>500</strong> - Erro interno do servidor</li>
+                        </ul>
+                        <div class="note">
+                            <strong>Dica:</strong> Sempre verifique a mensagem de erro para entender o motivo da falha.
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h2> Suporte</h2>
+                        <p>Em caso de dúvidas ou problemas com a API:</p>
+                        <ul>
+                            <li>E-mail: suporte@exemplo.com</li>
+                            <li>Telefone: +55 (11) 1234-5678</li>
+                            <li>Horário de atendimento: Segunda a Sexta, 9h-18h</li>
+                        </ul>
+                    </div>
+
+                    <footer>
+                        <p> 2025 Documentação da API - Todos os direitos reservados</p>
+                    </footer>
+
+            </main>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const endpoints = document.querySelectorAll('.endpoint');
+            const sidebar = document.querySelector('.sidebar');
+            const toggleButton = document.querySelector('.toggle-sidebar');
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    endpoints.forEach(ep => ep.classList.remove('active'));
+
+                    this.classList.add('active');
+
+                    const targetId = this.getAttribute('data-section');
+                    const targetEndpoint = document.getElementById(targetId);
+
+                    if (targetEndpoint) {
+                        targetEndpoint.classList.add('active');
+                    }
+
+                    // Close sidebar on mobile after selection
+                    if (window.innerWidth <= 768) {
+                        sidebar.classList.remove('show');
+                    }
+                });
+            });
+
+            // Toggle sidebar on mobile
+            toggleButton.addEventListener('click', function () {
+                sidebar.classList.toggle('show');
+            });
+        });
+    </script>
+</body>
+
+</html>
